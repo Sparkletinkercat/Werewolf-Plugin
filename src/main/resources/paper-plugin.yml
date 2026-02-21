@@ -1,0 +1,11 @@
+name: WerewolfPlugin
+version: 0.1.0
+main: io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin
+description: An example plugin
+author: Sparklesongfall
+website: https://papermc.io
+api-version: '1.21'
+load: STARTUP
+libraries:
+  - com.google.guava:guava:30.1.1-jre
+  - com.google.code.gson:gson:2.8.6
