@@ -1,9 +1,46 @@
 
 package io.github.sparkletinkercat.creaturesPlugin.Managers;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 
 public class Beacon {
+    private final JavaPlugin plugin;
     
+    public Beacon (JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+
+    public void summonBeaconDisplay (double x, double y, double z) {
+        World world = Bukkit.getWorld("world");
+        Location displayLoc = new Location(world,x,y,z);
+        displayLoc.add(0.0, 0.5, 0.0);
+        ItemStack pumpkinItem = new ItemStack(Material.CARVED_PUMPKIN);
+        ItemMeta meta = pumpkinItem.getItemMeta();
+
+        if (meta != null) {
+            NamespacedKey key = new NamespacedKey(plugin, "custom_model_data");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 665); // neutral
+            pumpkinItem.setItemMeta(meta);
+        }
+
+        pumpkinItem.setData(DataComponentTypes.CUSTOM_MODEL_DATA, (CustomModelData)CustomModelData.customModelData().addString("664").build());
+        ItemDisplay display = (ItemDisplay)displayLoc.getWorld().spawn(displayLoc, ItemDisplay.class);
+        display.setItemStack(pumpkinItem);
+        display.setPersistent(true);
+    }
 }
 
 

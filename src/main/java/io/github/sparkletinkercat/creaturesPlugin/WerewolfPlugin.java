@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.sparkletinkercat.creaturesPlugin.Commands.Werewolf;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.Beacon;
 import io.papermc.paper.command.brigadier.BasicCommand;
 
 import org.bukkit.Material;
@@ -47,6 +48,9 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
     String tagsString = String.join(", ", tags);
 
     player.sendMessage("Your tags:" + tagsString);
+
+    Beacon beacon = new Beacon (this);
+    beacon.summonBeaconDisplay (82.00,92.60,459.00);
   }
 
   @EventHandler
