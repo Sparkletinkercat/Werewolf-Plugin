@@ -14,6 +14,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.Location;
 
 import java.util.Set;
 
@@ -58,14 +59,17 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
     Player player = event.getPlayer();
     PluginPlayer pluginPlayer = new PluginPlayer(player);
     if ((boolean) pluginPlayer.getPlayerInformation("BuildMode")) {
-      //Block block = event.getBlock();
+      Block block = event.getBlock();
       event.getPlayer().sendMessage("You placed a block in build mode");
 
-      // if (block.getType() == Material.BARRIER) { // Our "custom block"
-      //     event.getPlayer().sendMessage("You placed a block in build mode");
+      if (block.getType() == Material.BARRIER) { // Our "custom block"
+          Location loc = block.getLocation();
+          Beacon beacon = new Beacon (this);
+          beacon.summonBeaconDisplay (loc);
 
-      //     // Add custom behavior, e.g., break differently
-      // }
+
+          // Add custom behavior, e.g., break differently
+      }
     } else {
       event.getPlayer().sendMessage("You are not in build mode");
     }

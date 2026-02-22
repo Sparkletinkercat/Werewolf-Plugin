@@ -22,6 +22,7 @@ public class Beacon {
         this.plugin = plugin;
     }
 
+    public void summonBeaconDisplay (Location loc) {this.summonBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
 
     public void summonBeaconDisplay (double x, double y, double z) {
         World world = Bukkit.getWorlds().get(0);
