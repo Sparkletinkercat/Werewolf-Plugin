@@ -57,14 +57,17 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
     // Check if player is in build_mode
     Player player = event.getPlayer();
     PluginPlayer pluginPlayer = new PluginPlayer(player);
-    player.sendMessage(pluginPlayer.getPlayerInformation("Team"));
+    if ((boolean) pluginPlayer.getPlayerInformation("BuildMode")) {
+      //Block block = event.getBlock();
+      event.getPlayer().sendMessage("You placed a block in build mode");
 
-    Block block = event.getBlock();
+      // if (block.getType() == Material.BARRIER) { // Our "custom block"
+      //     event.getPlayer().sendMessage("You placed a block in build mode");
 
-    if (block.getType() == Material.BARRIER) { // Our "custom block"
-        event.getPlayer().sendMessage("You placed a custom block!");
-
-        // Add custom behavior, e.g., break differently
+      //     // Add custom behavior, e.g., break differently
+      // }
+    } else {
+      event.getPlayer().sendMessage("You are not in build mode");
     }
   }
 
