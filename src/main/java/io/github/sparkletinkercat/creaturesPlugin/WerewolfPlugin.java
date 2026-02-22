@@ -50,7 +50,7 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
     player.sendMessage("Your tags:" + tagsString);
 
     Beacon beacon = new Beacon (this);
-    beacon.summonBeaconDisplay (82.00,92.60,459.00);
+    beacon.summonBeaconDisplay (82.00,92.00,459.00);
   }
 
   @EventHandler
@@ -64,16 +64,6 @@ public void onBlockPlace(BlockPlaceEvent event) {
     }
 }
 
-@EventHandler
-public void onBlockBreak(BlockBreakEvent event) {
-    Block block = event.getBlock();
-
-    if (block.getType() == Material.BARRIER) {
-        event.setDropItems(false); // maybe drop custom item instead
-        event.getBlock().getWorld().dropItemNaturally(block.getLocation(),
-            new ItemStack(Material.DIAMOND)); // example
-    }
-}
 
   
 }

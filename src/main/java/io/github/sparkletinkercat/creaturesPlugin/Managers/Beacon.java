@@ -24,9 +24,9 @@ public class Beacon {
 
 
     public void summonBeaconDisplay (double x, double y, double z) {
-        World world = Bukkit.getWorld("world");
+        World world = Bukkit.getWorlds().get(0);
         Location displayLoc = new Location(world,x,y,z);
-        displayLoc.add(0.0, 0.5, 0.0);
+        displayLoc.add(0.5, 0.0, 0.5);
         ItemStack pumpkinItem = new ItemStack(Material.CARVED_PUMPKIN);
         ItemMeta meta = pumpkinItem.getItemMeta();
 
