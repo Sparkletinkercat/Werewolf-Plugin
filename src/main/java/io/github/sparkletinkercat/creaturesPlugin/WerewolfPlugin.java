@@ -8,14 +8,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.sparkletinkercat.creaturesPlugin.Commands.Werewolf;
-import io.github.sparkletinkercat.creaturesPlugin.Managers.Beacon;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import io.papermc.paper.command.brigadier.BasicCommand;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 
@@ -26,11 +24,11 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
   
   @Override
   public void onEnable() {
-    Bukkit.getPluginManager().registerEvents(this, this);
+      Bukkit.getPluginManager().registerEvents(this, this);
 
-    //Register a command
-    BasicCommand yourCommand = new Werewolf();
-    registerCommand("werewolf", yourCommand);
+      //Register a command
+      BasicCommand yourCommand = new Werewolf();
+      registerCommand("werewolf", yourCommand);
   }
 
   @Override
@@ -54,7 +52,13 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
   }
 
   @EventHandler
-public void onBlockPlace(BlockPlaceEvent event) {
+  public void onBlockPlace(BlockPlaceEvent event) {
+
+    // Check if player is in build_mode
+    Player player = event.getPlayer();
+    PluginPlayer pluginPlayer = new PluginPlayer(player);
+    player.sendMessage(pluginPlayer.getPlayerInformation("Team"));
+
     Block block = event.getBlock();
 
     if (block.getType() == Material.BARRIER) { // Our "custom block"
@@ -62,7 +66,7 @@ public void onBlockPlace(BlockPlaceEvent event) {
 
         // Add custom behavior, e.g., break differently
     }
-}
+  }
 
 
   
