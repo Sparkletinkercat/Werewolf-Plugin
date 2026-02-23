@@ -54,10 +54,16 @@ public class Beacon {
     public void removeBeaconDisplay (Location loc) {this.removeBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
 
     public void removeBeaconDisplay (double x, double y, double z) {
+        Entity entity = returnBeaconAtLocation(x,y,z);
+        if (entity != null) {entity.remove();}
+    }
+
+    public Entity returnBeaconAtLocation (double x, double y, double z) {
+        Entity returnEntity = null;
         Location displayLoc = new Location(world,x,y,z);
 
         for (Entity entity : world.getNearbyEntities(displayLoc, 1, 1, 1)) {
-            
+
             // Get Item display then check if its a beacon
             if (entity instanceof ItemDisplay itemDisplay) {
                 ItemStack stack = itemDisplay.getItemStack();
@@ -66,12 +72,13 @@ public class Beacon {
 
                 String value = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
                 if (value.toLowerCase().contains("beacon")) {
-                    entity.remove();
+                    returnEntity = entity;
                     break;
                 }
             }
         }
-
+        return returnEntity;
+        
     }
 }
 
