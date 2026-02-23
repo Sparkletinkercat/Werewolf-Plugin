@@ -11,21 +11,24 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.Entity;  
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 
 public class Beacon {
     private final JavaPlugin plugin;
+    private final World world;
     
     public Beacon (JavaPlugin plugin) {
         this.plugin = plugin;
+        this.world = Bukkit.getWorlds().get(0);
     }
 
     public void summonBeaconDisplay (Location loc) {this.summonBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
 
     public void summonBeaconDisplay (double x, double y, double z) {
-        World world = Bukkit.getWorlds().get(0);
+        
         Location displayLoc = new Location(world,x,y,z);
 
         displayLoc.add(0.5, 0.5, 0.5);
@@ -34,7 +37,11 @@ public class Beacon {
 
         if (meta != null) {
             NamespacedKey key = new NamespacedKey(plugin, "custom_model_data");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 665); // neutral
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 665);
+            
+            NamespacedKey key2 = new NamespacedKey(plugin, "Type");
+            meta.getPersistentDataContainer().set(key2, PersistentDataType.STRING, "Beacon"); 
+
             pumpkinItem.setItemMeta(meta);
         }
 
@@ -42,6 +49,29 @@ public class Beacon {
         ItemDisplay display = (ItemDisplay)displayLoc.getWorld().spawn(displayLoc, ItemDisplay.class);
         display.setItemStack(pumpkinItem);
         display.setPersistent(true);
+    }
+
+    public void removeBeaconDisplay (Location loc) {this.removeBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
+
+    public void removeBeaconDisplay (double x, double y, double z) {
+        Location displayLoc = new Location(world,x,y,z);
+
+        for (Entity entity : world.getNearbyEntities(displayLoc, 1, 1, 1)) {
+            
+            // Get Item display then check if its a beacon
+            if (entity instanceof ItemDisplay itemDisplay) {
+                ItemStack stack = itemDisplay.getItemStack();
+                ItemMeta meta = stack.getItemMeta();
+                NamespacedKey key = new NamespacedKey(plugin, "type");
+
+                String value = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+                if (value.toLowerCase().contains("beacon")) {
+                    entity.remove();
+                    break;
+                }
+            }
+        }
+
     }
 }
 
