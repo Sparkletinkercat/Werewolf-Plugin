@@ -52,8 +52,6 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
 
     player.sendMessage("Your tags:" + tagsString);
 
-    Beacon beacon = new Beacon (this);
-    beacon.summonBeaconDisplay (82.00,92.00,459.00);
   }
 
   @EventHandler

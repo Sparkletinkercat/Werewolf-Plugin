@@ -12,6 +12,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Entity;  
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import org.bukkit.entity.Player;
+import org.bukkit.block.Block;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
@@ -53,7 +56,7 @@ public class Beacon {
     public void removeBeaconDisplay (Location loc) {this.removeBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
 
     public void removeBeaconDisplay (double x, double y, double z) {
-        Entity entity = returnBeaconAtLocation(x,y,z);
+        Entity entity = returnBeaconAtLocation(x + 0.5,y + 0.5,z + 0.5);
         if (entity != null) {entity.remove();}
     }
 
@@ -79,8 +82,22 @@ public class Beacon {
         return returnEntity;
     }
 
+    public void changeBeaconDisplay(CommandSourceStack source, int type) {
+        Beacon beacon = new Beacon (this.plugin);
+
+        Entity entity = source.getExecutor();
+        Player player = (Player) entity;
+    
+        Block target = player.getTargetBlockExact(20);
+        if (target != null && target.getType() == Material.BARRIER) {
+            beacon.changeBeaconDisplay(type, target.getX(),target.getY(),target.getZ());
+        } else {
+            player.sendMessage("No beacon block in range");
+        }
+    }
+
     public void changeBeaconDisplay(int display, double x, double y, double z) {
-        ItemDisplay itemDisplay = (ItemDisplay) returnBeaconAtLocation(x, y, z);
+        ItemDisplay itemDisplay = (ItemDisplay) returnBeaconAtLocation(x + 0.5, y + 0.5, z + 0.5);
         if (itemDisplay == null) return;
 
         // Create a new ItemStack with the correct material

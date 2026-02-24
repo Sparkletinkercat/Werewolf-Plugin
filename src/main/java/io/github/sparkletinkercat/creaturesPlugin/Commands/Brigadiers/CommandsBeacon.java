@@ -1,13 +1,12 @@
 package io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers;
 
-
+import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import java.util.List;
 import org.bukkit.plugin.java.JavaPlugin;
-import io.github.sparkletinkercat.creaturesPlugin.Commands.*;
 
 public class CommandsBeacon {
     private final JavaPlugin plugin;
@@ -37,11 +36,11 @@ public class CommandsBeacon {
                                 }
 
                                 // Replace with your logic to update the beacon model
-                                System.out.println("Here");
+                                Beacon beacon = new Beacon(plugin);
                                 
-                                if (type == "Holy") {new UpdateBeaconDisplay (plugin,ctx.getSource(), 664);}
-                                else if (type == "Neutral") {new UpdateBeaconDisplay (plugin,ctx.getSource(), 665);}
-                                else if (type == "Evil") {new UpdateBeaconDisplay (plugin,ctx.getSource(), 666);}
+                                if (type == "Holy") {beacon.changeBeaconDisplay (ctx.getSource(), 664);}
+                                else if (type == "Neutral") {beacon.changeBeaconDisplay (ctx.getSource(), 665);}
+                                else if (type == "Evil") {beacon.changeBeaconDisplay (ctx.getSource(), 666);}
 
                                 return 1;
                             })
