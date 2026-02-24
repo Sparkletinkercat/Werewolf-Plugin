@@ -36,8 +36,6 @@ public class Beacon {
         ItemMeta meta = pumpkinItem.getItemMeta();
 
         if (meta != null) {
-            NamespacedKey key = new NamespacedKey(plugin, "custom_model_data");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 665);
             
             NamespacedKey key2 = new NamespacedKey(plugin, "Type");
             meta.getPersistentDataContainer().set(key2, PersistentDataType.STRING, "Beacon"); 
@@ -45,7 +43,8 @@ public class Beacon {
             pumpkinItem.setItemMeta(meta);
         }
 
-        pumpkinItem.setData(DataComponentTypes.CUSTOM_MODEL_DATA, (CustomModelData)CustomModelData.customModelData().addString("664").build());
+        pumpkinItem.setData(DataComponentTypes.CUSTOM_MODEL_DATA, (CustomModelData)CustomModelData.customModelData().addString("666").build());
+
         ItemDisplay display = (ItemDisplay)displayLoc.getWorld().spawn(displayLoc, ItemDisplay.class);
         display.setItemStack(pumpkinItem);
         display.setPersistent(true);
@@ -78,8 +77,26 @@ public class Beacon {
             }
         }
         return returnEntity;
-        
     }
+
+    public void changeBeaconDisplay(int display, double x, double y, double z) {
+        ItemDisplay itemDisplay = (ItemDisplay) returnBeaconAtLocation(x, y, z);
+        if (itemDisplay == null) return;
+
+        // Create a new ItemStack with the correct material
+        ItemStack stack = itemDisplay.getItemStack(); // whatever base material
+
+        // Set custom model data
+        
+        stack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, (CustomModelData)CustomModelData.customModelData().addString(String.valueOf(display)).build());
+
+        // Push the new ItemStack to the ItemDisplay
+        itemDisplay.setItemStack(stack);
+
+        System.out.println("Updated beacon display to model ID: " + display);
+    }
+
+    
 }
 
 

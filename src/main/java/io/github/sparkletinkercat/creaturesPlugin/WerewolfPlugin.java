@@ -7,7 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.sparkletinkercat.creaturesPlugin.Commands.Werewolf;
+import io.github.sparkletinkercat.creaturesPlugin.Commands.*;
+import io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers.*;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import io.papermc.paper.command.brigadier.BasicCommand;
 
@@ -31,6 +32,8 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
       //Register a command
       BasicCommand yourCommand = new Werewolf();
       registerCommand("werewolf", yourCommand);
+
+      new CommandBrigadier(this).registerAll();
   }
 
   @Override
@@ -83,7 +86,6 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
           Location loc = block.getLocation();
           Beacon beacon = new Beacon (this);
           beacon.removeBeaconDisplay (loc);
-          event.getPlayer().sendMessage("You broke a block in build mode");
           
       }
     } else {
