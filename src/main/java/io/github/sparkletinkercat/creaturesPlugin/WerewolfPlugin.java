@@ -21,6 +21,8 @@ import org.bukkit.Location;
 import org.bukkit.event.server.ServerLoadEvent;
 
 import java.util.Set;
+import java.io.File;
+
 
 public class WerewolfPlugin extends JavaPlugin implements Listener {
   
@@ -37,6 +39,14 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
       registerCommand("werewolf", yourCommand);
 
       new CommandBrigadier(this).registerAll();
+
+      // Create Plugin Folder
+      File folder = getDataFolder();
+      if (!folder.exists()) {
+          folder.mkdirs();
+      }
+
+      saveResource("beacons.yml", false); // copies from jar to data folder
   }
 
   @EventHandler

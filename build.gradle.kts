@@ -5,6 +5,7 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/9.2.0/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+
 plugins {
     java
 }
@@ -30,5 +31,11 @@ java {
     }
 }
 
+tasks.register<org.gradle.api.tasks.javadoc.Javadoc>("generateJavadoc") {
+    source = sourceSets["main"].allJava
+    classpath = sourceSets["main"].compileClasspath
+    // Use 'destinationDir' for older Gradle versions
+    destinationDir = file("$buildDir/docs/javadoc")
+}
 
 
