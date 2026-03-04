@@ -22,6 +22,9 @@ import io.papermc.paper.datacomponent.item.CustomModelData;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class Beacon {
     private final JavaPlugin plugin;
@@ -231,6 +234,26 @@ public class Beacon {
         }
     }
 
+    public class BeaconItem {
+        private double x;
+        private double y;
+        private double z;
+        private String name;
+
+        public BeaconItem (double x, double y, double z, String name) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.name = name;
+        }
+
+        public double getX() {return this.x;}
+        public double getY() {return this.y;}
+        public double getZ() {return this.z;}
+        public String getName() {return this.name;}
+
+    }
+
     /**
      * Retrieves the x,y, and z for a registered beacon in the beacon.yml file
      *
@@ -258,25 +281,39 @@ public class Beacon {
         return beaconItem;
     }
 
-    public class BeaconItem {
-        private double x;
-        private double y;
-        private double z;
-        private String name;
+    /**
+     * Retrieves the x,y,z and name for all registered beacon in the beacon.yml file
+     *
+     * @return Returns an arraylist of beacon items with the data from the yml file for all registered beacons
+     * 
+     */
+    public List<BeaconItem> retrieveAllBeaconsFromFile () {
+        File file = new File(plugin.getDataFolder(), "beacons.yml");
 
-        public BeaconItem (double x, double y, double z, String name) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.name = name;
+        if (!file.exists()) {
+            plugin.getLogger().warning("beacons.yml does not exist!");
+            return null;
         }
 
-        public double getX() {return this.x;}
-        public double getY() {return this.y;}
-        public double getZ() {return this.z;}
-        public String getName() {return this.name;}
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (!config.contains("beacons")) {return null;}
 
+        ConfigurationSection section = config.getConfigurationSection("beacons");
+        List<BeaconItem> beaconItems = new ArrayList<BeaconItem>();
+
+        for (String name : section.getKeys(false)) {
+            String path = "beacons." + name;
+
+            double x = config.getDouble(path + ".x");
+            double y = config.getDouble(path + ".y");
+            double z = config.getDouble(path + ".z");
+
+            beaconItems.add(this.new BeaconItem(x,y,z,name));
+        }
+
+        return beaconItems;
     }
+    
 
 
     
