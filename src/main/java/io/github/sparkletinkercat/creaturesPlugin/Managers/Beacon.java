@@ -66,8 +66,22 @@ public class Beacon {
         display.setPersistent(true);
     }
 
+    /**
+     * Removes the custom beacon display at a specified location
+     *
+     * @param loc The beacons location
+     * 
+     */
     public void removeBeaconDisplay (Location loc) {this.removeBeaconDisplay (loc.getX(), loc.getY(), loc.getZ());}
 
+    /**
+     * Removes the custom beacon display at a specified location
+     *
+     * @param x The beacons x coordinate
+     * @param y The beacons y coordinate
+     * @param z The beacons z coordinate
+     * 
+     */
     public void removeBeaconDisplay (double x, double y, double z) {
         Entity entity = returnBeaconAtLocation(x + 0.5,y + 0.5,z + 0.5);
         if (entity != null) {entity.remove();}
