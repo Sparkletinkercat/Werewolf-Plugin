@@ -113,6 +113,39 @@ public class Beacon {
         System.out.println("Updated beacon display to model ID: " + display);
     }
 
+    public void registerBeacon (Player player, String name) {
+    
+        Block target = player.getTargetBlockExact(20);
+        if (target != null && target.getType() == Material.BARRIER) {
+            // Add name metadata
+            this.updateMetaData(name, target.getX(),target.getY(),target.getZ());
+            // Save Beacon to file
+        } else {
+            player.sendMessage("No beacon block in range");
+        }
+    }
+
+    public void updateMetaData (String name, double x, double y, double z) {
+        Entity beacon = this.returnBeaconAtLocation (x + 0.5, y + 0.5, z + 0.5);
+        if (beacon != null) {
+            ItemDisplay itemDisplay = (ItemDisplay) beacon;
+            ItemStack stack = itemDisplay.getItemStack();
+            ItemMeta meta = stack.getItemMeta();
+
+            if (meta != null) {
+                
+                NamespacedKey key2 = new NamespacedKey(plugin, "Name");
+                meta.getPersistentDataContainer().set(key2, PersistentDataType.STRING, name); 
+
+                stack.setItemMeta(meta);
+                itemDisplay.setItemStack(stack);
+            }
+
+            
+
+        }
+    }
+
     
 }
 

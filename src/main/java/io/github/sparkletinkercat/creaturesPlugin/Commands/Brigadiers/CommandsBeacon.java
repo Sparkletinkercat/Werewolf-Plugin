@@ -53,6 +53,8 @@ public class CommandsBeacon {
         
         command.createCommandRoot("registerBeacon", player -> {
             player.sendMessage("You just registered a beacon!");
+            Beacon beacon = new Beacon(plugin);
+            beacon.registerBeacon (player, "Oakhurst Town");
         });
 
         root.then(changeTypeCommand);
