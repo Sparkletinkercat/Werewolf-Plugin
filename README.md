@@ -4,3 +4,8 @@ This minecraft plugin is designed to completely redo the features of pows vampir
 It is designed for 1.21.10 and paper servers. Its still a work in progress. 
 
 You can compile this code using Gradle, (./gradlew clean build)
+
+## Javadocs
+You can view the javadocs for this project here:
+
+https://sparkletinkercat.github.io/Werewolf-Plugin/index.html
