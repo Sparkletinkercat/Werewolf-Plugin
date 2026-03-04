@@ -3,10 +3,10 @@ package io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import java.util.List;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandsBeacon {
     private final JavaPlugin plugin;
@@ -17,9 +17,10 @@ public class CommandsBeacon {
 
     public LiteralArgumentBuilder<CommandSourceStack> getBeaconCommand() {
 
-        LiteralArgumentBuilder<CommandSourceStack> beaconRoot =
-                Commands.literal("beacon");
+        Command command = new Command(plugin, "beacon");
+        LiteralArgumentBuilder<CommandSourceStack> root = command.returnCommandRoot();
 
+        // Register larger tree
         List<String> beaconTypes = List.of("Neutral", "Holy", "Evil");
 
         LiteralArgumentBuilder<CommandSourceStack> changeTypeCommand =
@@ -47,9 +48,17 @@ public class CommandsBeacon {
             );
         }
 
-        beaconRoot.then(changeTypeCommand);
+        
 
-        return beaconRoot;
+        
+        command.createCommandRoot("registerBeacon", player -> {
+            player.sendMessage("You just registered a beacon!");
+        });
+
+        root.then(changeTypeCommand);
+        
+       
+        return root;
     }
 
 }

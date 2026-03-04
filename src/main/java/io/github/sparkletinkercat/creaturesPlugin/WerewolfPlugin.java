@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.github.sparkletinkercat.creaturesPlugin.Commands.*;
 import io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers.*;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
+import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
 import io.papermc.paper.command.brigadier.BasicCommand;
 
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.Location;
+import org.bukkit.event.server.ServerLoadEvent;
 
 import java.util.Set;
 
@@ -28,12 +30,18 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
   @Override
   public void onEnable() {
       Bukkit.getPluginManager().registerEvents(this, this);
+      getServer().getPluginManager().registerEvents(new BeaconListener(this), this);
 
       //Register a command
       BasicCommand yourCommand = new Werewolf();
       registerCommand("werewolf", yourCommand);
 
       new CommandBrigadier(this).registerAll();
+  }
+
+  @EventHandler
+  public void onServerLoad(ServerLoadEvent event) {
+      
   }
 
   @Override
