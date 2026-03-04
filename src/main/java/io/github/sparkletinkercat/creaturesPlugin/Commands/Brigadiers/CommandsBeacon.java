@@ -52,7 +52,6 @@ public class CommandsBeacon {
 
         
         command.createCommandRoot("registerBeacon", (player, name) -> {
-            player.sendMessage("You just registered a beacon called " + name);
             Beacon beacon = new Beacon(plugin);
             beacon.registerBeacon (player, name);
         });

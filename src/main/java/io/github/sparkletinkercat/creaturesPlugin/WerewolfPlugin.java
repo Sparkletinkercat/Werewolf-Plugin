@@ -32,13 +32,14 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
   @Override
   public void onEnable() {
       Bukkit.getPluginManager().registerEvents(this, this);
-      getServer().getPluginManager().registerEvents(new BeaconListener(this), this);
+      BeaconListener beaconListener = new BeaconListener(this);
+      getServer().getPluginManager().registerEvents(beaconListener, this);
 
       //Register a command
       BasicCommand yourCommand = new Werewolf();
       registerCommand("werewolf", yourCommand);
 
-      new CommandBrigadier(this).registerAll();
+      new CommandBrigadier(this, beaconListener).registerAll();
 
       // Create Plugin Folder
       File folder = getDataFolder();

@@ -10,14 +10,18 @@ import org.bukkit.entity.Entity;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
-
+import java.util.List;
 
 public class BeaconListener implements Listener {
     private final JavaPlugin plugin;
+    private List<Beacon.BeaconItem> beaconItems;
 
     public BeaconListener (JavaPlugin plugin) {
         this.plugin = plugin;
+        this.beaconItems = null;
     }
+
+    public void importBeaconItems (List<Beacon.BeaconItem> beaconItems) {this.beaconItems = beaconItems;}
     
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {

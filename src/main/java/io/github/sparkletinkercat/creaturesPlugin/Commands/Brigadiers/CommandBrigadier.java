@@ -5,44 +5,32 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
+import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
 
 public class CommandBrigadier {
 
     private final JavaPlugin plugin;
+    private final BeaconListener beaconListener;
 
-    public CommandBrigadier(JavaPlugin plugin) {
+    public CommandBrigadier(JavaPlugin plugin, BeaconListener beaconListener) {
         this.plugin = plugin;
+        this.beaconListener = beaconListener;
     }
 
     public void registerAll() {
         CommandsBeacon beaconManager = new CommandsBeacon(plugin);
+        CommandsGame gameManager = new CommandsGame(plugin,beaconListener);
 
         plugin.getLifecycleManager().registerEventHandler(
                 LifecycleEvents.COMMANDS,
                 event -> {
 
                     LiteralArgumentBuilder<CommandSourceStack> root =
-                            Commands.literal("spark");
+                            Commands.literal("admin");
 
                     root.then(beaconManager.getBeaconCommand());
+                    root.then(gameManager.getGameCommand());
 
-                    root.then(
-                            Commands.literal("tphere")
-                                    .executes(ctx -> {
-                                        ctx.getSource().getSender()
-                                                .sendMessage("Teleporting...");
-                                        return 1;
-                                    })
-                    );
-
-                    root.then(
-                            Commands.literal("killall")
-                                    .executes(ctx -> {
-                                        ctx.getSource().getSender()
-                                                .sendMessage("Killed everything!");
-                                        return 1;
-                                    })
-                    );
 
                     event.registrar().register(root.build());
                 }
