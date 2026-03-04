@@ -19,6 +19,10 @@ import org.bukkit.block.Block;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+import java.io.File;
+import java.io.IOException;
+
 public class Beacon {
     private final JavaPlugin plugin;
     private final World world;
@@ -123,6 +127,15 @@ public class Beacon {
         }
     }
 
+    /**
+     * Changes the beacons display to another custom look
+     *
+     * @param display The number of the resource file of the texture.
+     * @param x The beacons x coordinate
+     * @param y The beacons y coordinate
+     * @param z The beacons z coordinate
+     * 
+     */
     public void changeBeaconDisplay(int display, double x, double y, double z) {
         ItemDisplay itemDisplay = (ItemDisplay) returnBeaconAtLocation(x + 0.5, y + 0.5, z + 0.5);
         if (itemDisplay == null) return;
@@ -140,19 +153,37 @@ public class Beacon {
         System.out.println("Updated beacon display to model ID: " + display);
     }
 
+    /**
+     * Registers a beacon for gameplay, updating its metadata and adding it to the yml file.
+     *
+     * @param player The player who ran the command
+     * @param name The name of the beacon
+     * 
+     */
     public void registerBeacon (Player player, String name) {
     
         Block target = player.getTargetBlockExact(20);
         if (target != null && target.getType() == Material.BARRIER) {
             // Add name metadata
-            this.updateMetaData(name, target.getX(),target.getY(),target.getZ());
+            this.updateMetaData(name, "Name", target.getX(),target.getY(),target.getZ());
             // Save Beacon to file
+            this.storeBeaconInFile (name,target.getX(),target.getY(),target.getZ());
         } else {
             player.sendMessage("No beacon block in range");
         }
     }
 
-    public void updateMetaData (String name, double x, double y, double z) {
+    /**
+     * Updates the Meta Data for a beacon 
+     *
+     * @param beaconName The exact name of the beacon
+     * @param metadata Where the metadata is located
+     * @param x The beacons x coordinate
+     * @param y The beacons y coordinate
+     * @param z The beacons z coordinate
+     * 
+     */
+    public void updateMetaData (String name, String metadata, double x, double y, double z) {
         Entity beacon = this.returnBeaconAtLocation (x + 0.5, y + 0.5, z + 0.5);
         if (beacon != null) {
             ItemDisplay itemDisplay = (ItemDisplay) beacon;
@@ -161,12 +192,37 @@ public class Beacon {
 
             if (meta != null) {
                 
-                NamespacedKey key2 = new NamespacedKey(plugin, "Name");
+                NamespacedKey key2 = new NamespacedKey(plugin, metadata);
                 meta.getPersistentDataContainer().set(key2, PersistentDataType.STRING, name); 
 
                 stack.setItemMeta(meta);
                 itemDisplay.setItemStack(stack);
             }
+        }
+    }
+
+    /**
+     * Stores a beacon for later reference in the beacon.yml file
+     *
+     * @param beaconName The exact name of the beacon
+     * @param x The beacons x coordinate
+     * @param y The beacons y coordinate
+     * @param z The beacons z coordinate
+     * 
+     */
+    public void storeBeaconInFile (String beaconName, double x, double y, double z) {
+        File file = new File(plugin.getDataFolder(), "beacons.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        config.set("beacons." + beaconName + ".x", x);
+        config.set("beacons." + beaconName + ".y", y);
+        config.set("beacons." + beaconName + ".z", z);
+
+        try {
+            config.save(file);
+            plugin.getLogger().info("Saved beacon " + beaconName + " to beacons.yml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

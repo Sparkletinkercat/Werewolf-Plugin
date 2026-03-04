@@ -51,10 +51,10 @@ public class CommandsBeacon {
         
 
         
-        command.createCommandRoot("registerBeacon", player -> {
-            player.sendMessage("You just registered a beacon!");
+        command.createCommandRoot("registerBeacon", (player, name) -> {
+            player.sendMessage("You just registered a beacon called " + name);
             Beacon beacon = new Beacon(plugin);
-            beacon.registerBeacon (player, "Oakhurst Town");
+            beacon.registerBeacon (player, name);
         });
 
         root.then(changeTypeCommand);
