@@ -212,6 +212,11 @@ public class Beacon {
      */
     public void storeBeaconInFile (String beaconName, double x, double y, double z) {
         File file = new File(plugin.getDataFolder(), "beacons.yml");
+        if (!file.exists()) {
+            plugin.getLogger().warning("beacons.yml does not exist!");
+            return;
+        }
+
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         config.set("beacons." + beaconName + ".x", x);
@@ -225,6 +230,54 @@ public class Beacon {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Retrieves the x,y, and z for a registered beacon in the beacon.yml file
+     *
+     * @param beaconName The exact name of the beacon
+     * @return Returns a beacon item with the data from the yml file for that beacon
+     * 
+     */
+    public BeaconItem retrieveBeaconByNameFromFile (String beaconName) {
+        File file = new File(plugin.getDataFolder(), "beacons.yml");
+
+        if (!file.exists()) {
+            plugin.getLogger().warning("beacons.yml does not exist!");
+            return null;
+        }
+
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String path = "beacons." + beaconName;
+        if (!config.contains(path)) {return null;}
+
+        double x = config.getDouble(path + ".x");
+        double y = config.getDouble(path + ".y");
+        double z = config.getDouble(path + ".z");
+
+        BeaconItem beaconItem = this.new BeaconItem (x,y,z,beaconName);
+        return beaconItem;
+    }
+
+    public class BeaconItem {
+        private double x;
+        private double y;
+        private double z;
+        private String name;
+
+        public BeaconItem (double x, double y, double z, String name) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.name = name;
+        }
+
+        public double getX() {return this.x;}
+        public double getY() {return this.y;}
+        public double getZ() {return this.z;}
+        public String getName() {return this.name;}
+
+    }
+
 
     
 }
