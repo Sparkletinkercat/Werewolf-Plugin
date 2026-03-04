@@ -1,0 +1,5 @@
+io.github.sparkletinkercat.creaturesPlugin
+io.github.sparkletinkercat.creaturesPlugin.Commands
+io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers
+io.github.sparkletinkercat.creaturesPlugin.Listeners
+io.github.sparkletinkercat.creaturesPlugin.Managers
