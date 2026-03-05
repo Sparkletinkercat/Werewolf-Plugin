@@ -23,6 +23,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -312,6 +314,46 @@ public class Beacon {
         }
 
         return beaconItems;
+    }
+
+    public Map<String, InformationBar> createBeaconInformationBars (List<BeaconItem> beaconItems) {
+        Map<String, InformationBar> beaconInfoBars = new HashMap<>();
+        
+        for (BeaconItem beacon : beaconItems) {
+            beaconInfoBars.put(beacon.getName(), new InformationBar("Concencrating " + beacon.getName() + "..."));
+        }
+
+
+        return beaconInfoBars;
+    }
+
+    public String getBeaconMetadata (Entity entity, String metadata) {
+        String value = null;
+        if (entity instanceof ItemDisplay itemDisplay) {
+            ItemStack stack = itemDisplay.getItemStack();
+            ItemMeta meta = stack.getItemMeta();
+            NamespacedKey key = new NamespacedKey(plugin, metadata);
+
+            if (key != null) {
+                value = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+            }
+            
+        }
+        return value;
+    }
+
+    public String getBeaconMetadata (ItemStack stack, String metadata) {
+        String value = null;
+        
+        ItemMeta meta = stack.getItemMeta();
+        NamespacedKey key = new NamespacedKey(plugin, metadata);
+
+        if (key != null) {
+            value = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+        }
+            
+        
+        return value;
     }
     
 

@@ -5,7 +5,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
-
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -32,6 +33,10 @@ public class CommandsGame {
                 
             }
             beaconListener.importBeaconItems(beaconItems);
+
+            // Register all beacon Info bars
+            Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
+            beaconListener.importBeaconInfoBars(beaconInfoBars);
         });
         
        
