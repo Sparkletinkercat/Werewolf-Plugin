@@ -12,7 +12,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class BeaconListener implements Listener {
     private final JavaPlugin plugin;
@@ -31,8 +30,9 @@ public class BeaconListener implements Listener {
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        ItemStack item = checkIfBeaconNearby(player, 5);
         Beacon beacon = new Beacon(plugin);
+        ItemStack item = beacon.checkIfBeaconNearby(player, 5);
+        
 
         if (item != null && event.isSneaking()) {
             InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
@@ -46,39 +46,8 @@ public class BeaconListener implements Listener {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-        // InformationBar infoBar = new InformationBar ("Concencrating");
-        
-
-        // if (event.isSneaking()) {player.sendMessage("Crouched");} 
-        // else {player.sendMessage("No longer crouched");}
-
-        // if (checkIfBeaconNearby(player, 5) && event.isSneaking()) {
-        //     infoBar.displayInformationBar(player);
-        // } else if (!checkIfBeaconNearby(player, 5) || !event.isSneaking()) {
-        //     infoBar.removeInformationBar(player);
-        //     player.sendMessage("Removed bossbar");
-        // }
     }
 
 
-    public ItemStack checkIfBeaconNearby(Player player, int radius) {
-        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
-            if (entity instanceof ItemDisplay display) {
-                ItemStack item = display.getItemStack();
-
-                if (item != null && item.getType() == Material.CARVED_PUMPKIN) {return item;}
-            }
-        }
-        return null;
-    }
+    
 }

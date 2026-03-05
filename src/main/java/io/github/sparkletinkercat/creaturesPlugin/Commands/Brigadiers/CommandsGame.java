@@ -6,9 +6,9 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class CommandsGame {
     private final JavaPlugin plugin;
@@ -26,6 +26,11 @@ public class CommandsGame {
         
         command.createCommandRoot("startGame", player -> {
             player.sendMessage("You started the game.");
+
+            // -------------------------------------------
+            // Add in all registered beacons
+            // -------------------------------------------
+
             Beacon beacon = new Beacon(plugin);
             List<Beacon.BeaconItem> beaconItems = beacon.retrieveAllBeaconsFromFile();
             for (Beacon.BeaconItem beaconItem : beaconItems) {
@@ -37,6 +42,28 @@ public class CommandsGame {
             // Register all beacon Info bars
             Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
             beaconListener.importBeaconInfoBars(beaconInfoBars);
+
+            // -------------------------------------------
+            // Add in all registered teams
+            // -------------------------------------------
+
+        });
+
+        command.createCommandRoot("endGame", player -> {
+            player.sendMessage("You ended the game.");
+
+            
+            
+        });
+
+        command.createCommandRoot("newGame", player -> {
+            player.sendMessage("You created a new game.");
+
+            for (Player individualPlayer : Bukkit.getOnlinePlayers()) {
+                PlayerManager playerManager = new PlayerManager(plugin,individualPlayer);
+                playerManager.removeAllNonPermissionTags();
+            }
+            
         });
         
        

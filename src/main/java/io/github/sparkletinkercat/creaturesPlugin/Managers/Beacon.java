@@ -356,7 +356,16 @@ public class Beacon {
         return value;
     }
     
+    public ItemStack checkIfBeaconNearby(Player player, int radius) {
+        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
+            if (entity instanceof ItemDisplay display) {
+                ItemStack item = display.getItemStack();
 
+                if (item != null && item.getType() == Material.CARVED_PUMPKIN) {return item;}
+            }
+        }
+        return null;
+    }
 
     
 }
