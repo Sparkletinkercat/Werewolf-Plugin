@@ -37,7 +37,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Summary:</p>
 <ul>
-<li>Nested</li>
+<li><a href="#nested-class-summary">Nested</a></li>
 <li>Field</li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
@@ -57,7 +57,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -94,6 +94,21 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="Beacon.BeaconItem.html" class="type-name-link" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -123,46 +138,90 @@ loadScripts(document, 'script');</script>
  double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Changes the beacons display to another custom look</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeBeaconDisplay(io.papermc.paper.command.brigadier.CommandSourceStack,int)" class="member-name-link">changeBeaconDisplay</a><wbr>(io.papermc.paper.command.brigadier.CommandSourceStack&nbsp;source,
  int&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.bukkit.inventory.ItemStack</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkIfBeaconNearby(org.bukkit.entity.Player,int)" class="member-name-link">checkIfBeaconNearby</a><wbr>(org.bukkit.entity.Player&nbsp;player,
+ int&nbsp;radius)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="InformationBar.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">InformationBar</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createBeaconInformationBars(java.util.List)" class="member-name-link">createBeaconInformationBars</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;&nbsp;beaconItems)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBeaconMetadata(org.bukkit.entity.Entity,java.lang.String)" class="member-name-link">getBeaconMetadata</a><wbr>(org.bukkit.entity.Entity&nbsp;entity,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBeaconMetadata(org.bukkit.inventory.ItemStack,java.lang.String)" class="member-name-link">getBeaconMetadata</a><wbr>(org.bukkit.inventory.ItemStack&nbsp;stack,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#registerBeacon(org.bukkit.entity.Player,java.lang.String)" class="member-name-link">registerBeacon</a><wbr>(org.bukkit.entity.Player&nbsp;player,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Registers a beacon for gameplay, updating its metadata and adding it to the yml file.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeBeaconDisplay(double,double,double)" class="member-name-link">removeBeaconDisplay</a><wbr>(double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes the custom beacon display at a specified location</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeBeaconDisplay(org.bukkit.Location)" class="member-name-link">removeBeaconDisplay</a><wbr>(org.bukkit.Location&nbsp;loc)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes the custom beacon display at a specified location</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#retrieveAllBeaconsFromFile()" class="member-name-link">retrieveAllBeaconsFromFile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the x,y,z and name for all registered beacon in the beacon.yml file</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#retrieveBeaconByNameFromFile(java.lang.String)" class="member-name-link">retrieveBeaconByNameFromFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;beaconName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the x,y, and z for a registered beacon in the beacon.yml file</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.bukkit.entity.Entity</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#returnBeaconAtLocation(double,double,double)" class="member-name-link">returnBeaconAtLocation</a><wbr>(double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonBeaconDisplay(double,double,double)" class="member-name-link">summonBeaconDisplay</a><wbr>(double&nbsp;x,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#storeBeaconInFile(java.lang.String,double,double,double)" class="member-name-link">storeBeaconInFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;beaconName,
+ double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Summons the custom beacon display at a specified location</div>
+<div class="block">Stores a beacon for later reference in the beacon.yml file</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonBeaconDisplay(org.bukkit.Location)" class="member-name-link">summonBeaconDisplay</a><wbr>(org.bukkit.Location&nbsp;loc)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonBeaconDisplay(double,double,double)" class="member-name-link">summonBeaconDisplay</a><wbr>(double&nbsp;x,
+ double&nbsp;y,
+ double&nbsp;z)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Summons the custom beacon display at a specified location</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMetaData(java.lang.String,double,double,double)" class="member-name-link">updateMetaData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonBeaconDisplay(org.bukkit.Location)" class="member-name-link">summonBeaconDisplay</a><wbr>(org.bukkit.Location&nbsp;loc)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Summons the custom beacon display at a specified location</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMetaData(java.lang.String,java.lang.String,double,double,double)" class="member-name-link">updateMetaData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata,
  double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the Meta Data for a beacon</div>
+</div>
 </div>
 </div>
 </div>
@@ -224,6 +283,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="removeBeaconDisplay(org.bukkit.Location)">
 <h3>removeBeaconDisplay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeBeaconDisplay</span><wbr><span class="parameters">(org.bukkit.Location&nbsp;loc)</span></div>
+<div class="block">Removes the custom beacon display at a specified location</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>loc</code> - The beacons location</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -232,6 +296,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeBeaconDisplay</span><wbr><span class="parameters">(double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</span></div>
+<div class="block">Removes the custom beacon display at a specified location</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - The beacons x coordinate</dd>
+<dd><code>y</code> - The beacons y coordinate</dd>
+<dd><code>z</code> - The beacons z coordinate</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -256,6 +327,14 @@ loadScripts(document, 'script');</script>
  double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</span></div>
+<div class="block">Changes the beacons display to another custom look</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>display</code> - The number of the resource file of the texture.</dd>
+<dd><code>x</code> - The beacons x coordinate</dd>
+<dd><code>y</code> - The beacons y coordinate</dd>
+<dd><code>z</code> - The beacons z coordinate</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -263,15 +342,99 @@ loadScripts(document, 'script');</script>
 <h3>registerBeacon</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">registerBeacon</span><wbr><span class="parameters">(org.bukkit.entity.Player&nbsp;player,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Registers a beacon for gameplay, updating its metadata and adding it to the yml file.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>player</code> - The player who ran the command</dd>
+<dd><code>name</code> - The name of the beacon</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="updateMetaData(java.lang.String,double,double,double)">
+<section class="detail" id="updateMetaData(java.lang.String,java.lang.String,double,double,double)">
 <h3>updateMetaData</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMetaData</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata,
  double&nbsp;x,
  double&nbsp;y,
  double&nbsp;z)</span></div>
+<div class="block">Updates the Meta Data for a beacon</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - The exact name of the beacon</dd>
+<dd><code>metadata</code> - Where the metadata is located</dd>
+<dd><code>x</code> - The beacons x coordinate</dd>
+<dd><code>y</code> - The beacons y coordinate</dd>
+<dd><code>z</code> - The beacons z coordinate</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="storeBeaconInFile(java.lang.String,double,double,double)">
+<h3>storeBeaconInFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">storeBeaconInFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;beaconName,
+ double&nbsp;x,
+ double&nbsp;y,
+ double&nbsp;z)</span></div>
+<div class="block">Stores a beacon for later reference in the beacon.yml file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>beaconName</code> - The exact name of the beacon</dd>
+<dd><code>x</code> - The beacons x coordinate</dd>
+<dd><code>y</code> - The beacons y coordinate</dd>
+<dd><code>z</code> - The beacons z coordinate</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="retrieveBeaconByNameFromFile(java.lang.String)">
+<h3>retrieveBeaconByNameFromFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a></span>&nbsp;<span class="element-name">retrieveBeaconByNameFromFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;beaconName)</span></div>
+<div class="block">Retrieves the x,y, and z for a registered beacon in the beacon.yml file</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>beaconName</code> - The exact name of the beacon</dd>
+<dt>Returns:</dt>
+<dd>Returns a beacon item with the data from the yml file for that beacon</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="retrieveAllBeaconsFromFile()">
+<h3>retrieveAllBeaconsFromFile</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;</span>&nbsp;<span class="element-name">retrieveAllBeaconsFromFile</span>()</div>
+<div class="block">Retrieves the x,y,z and name for all registered beacon in the beacon.yml file</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Returns an arraylist of beacon items with the data from the yml file for all registered beacons</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createBeaconInformationBars(java.util.List)">
+<h3>createBeaconInformationBars</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="InformationBar.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">InformationBar</a>&gt;</span>&nbsp;<span class="element-name">createBeaconInformationBars</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;&nbsp;beaconItems)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBeaconMetadata(org.bukkit.entity.Entity,java.lang.String)">
+<h3>getBeaconMetadata</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBeaconMetadata</span><wbr><span class="parameters">(org.bukkit.entity.Entity&nbsp;entity,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBeaconMetadata(org.bukkit.inventory.ItemStack,java.lang.String)">
+<h3>getBeaconMetadata</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBeaconMetadata</span><wbr><span class="parameters">(org.bukkit.inventory.ItemStack&nbsp;stack,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metadata)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="checkIfBeaconNearby(org.bukkit.entity.Player,int)">
+<h3>checkIfBeaconNearby</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.bukkit.inventory.ItemStack</span>&nbsp;<span class="element-name">checkIfBeaconNearby</span><wbr><span class="parameters">(org.bukkit.entity.Player&nbsp;player,
+ int&nbsp;radius)</span></div>
 </section>
 </li>
 </ul>

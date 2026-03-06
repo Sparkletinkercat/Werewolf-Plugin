@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class FileManager {
     private final JavaPlugin plugin;
@@ -31,11 +32,17 @@ public class FileManager {
 
     public void updateFile (String path, Object value) {
         config.set(path, value);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+        try {config.save(file);} 
+        catch (IOException e) {e.printStackTrace();}
     }
+
+    public ConfigurationSection returnSectionOfFile (String sectionName) {
+        if (!config.contains(sectionName)) {return null;}
+        ConfigurationSection section = config.getConfigurationSection(sectionName);
+
+        return section;
+    }
+
+    public YamlConfiguration returnConfig () {return config;}
+
 }

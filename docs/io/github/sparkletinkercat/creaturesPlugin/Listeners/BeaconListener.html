@@ -123,13 +123,15 @@ implements org.bukkit.event.Listener</span></div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkIfBeaconNearby(org.bukkit.entity.Player,int)" class="member-name-link">checkIfBeaconNearby</a><wbr>(org.bukkit.entity.Player&nbsp;player,
- int&nbsp;radius)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#importBeaconInfoBars(java.util.Map)" class="member-name-link">importBeaconInfoBars</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../Managers/InformationBar.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">InformationBar</a>&gt;&nbsp;beaconInfoBars)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onPlayerToggleSneak(org.bukkit.event.player.PlayerToggleSneakEvent)" class="member-name-link">onPlayerToggleSneak</a><wbr>(org.bukkit.event.player.PlayerToggleSneakEvent&nbsp;event)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#importBeaconItems(java.util.List)" class="member-name-link">importBeaconItems</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Managers/Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;&nbsp;beaconItems)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onPlayerToggleSneak(org.bukkit.event.player.PlayerToggleSneakEvent)" class="member-name-link">onPlayerToggleSneak</a><wbr>(org.bukkit.event.player.PlayerToggleSneakEvent&nbsp;event)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -162,16 +164,21 @@ implements org.bukkit.event.Listener</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="onPlayerToggleSneak(org.bukkit.event.player.PlayerToggleSneakEvent)">
-<h3>onPlayerToggleSneak</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onPlayerToggleSneak</span><wbr><span class="parameters">(org.bukkit.event.player.PlayerToggleSneakEvent&nbsp;event)</span></div>
+<section class="detail" id="importBeaconItems(java.util.List)">
+<h3>importBeaconItems</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">importBeaconItems</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Managers/Beacon.BeaconItem.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">Beacon.BeaconItem</a>&gt;&nbsp;beaconItems)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="checkIfBeaconNearby(org.bukkit.entity.Player,int)">
-<h3>checkIfBeaconNearby</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">checkIfBeaconNearby</span><wbr><span class="parameters">(org.bukkit.entity.Player&nbsp;player,
- int&nbsp;radius)</span></div>
+<section class="detail" id="importBeaconInfoBars(java.util.Map)">
+<h3>importBeaconInfoBars</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">importBeaconInfoBars</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../Managers/InformationBar.html" title="class in io.github.sparkletinkercat.creaturesPlugin.Managers">InformationBar</a>&gt;&nbsp;beaconInfoBars)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="onPlayerToggleSneak(org.bukkit.event.player.PlayerToggleSneakEvent)">
+<h3>onPlayerToggleSneak</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onPlayerToggleSneak</span><wbr><span class="parameters">(org.bukkit.event.player.PlayerToggleSneakEvent&nbsp;event)</span></div>
 </section>
 </li>
 </ul>

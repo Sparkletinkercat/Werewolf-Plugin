@@ -181,7 +181,7 @@ public class Beacon {
     /**
      * Updates the Meta Data for a beacon 
      *
-     * @param beaconName The exact name of the beacon
+     * @param name The exact name of the beacon
      * @param metadata Where the metadata is located
      * @param x The beacons x coordinate
      * @param y The beacons y coordinate
