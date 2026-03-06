@@ -20,6 +20,7 @@ public class CommandBrigadier {
     public void registerAll() {
         CommandsBeacon beaconManager = new CommandsBeacon(plugin);
         CommandsGame gameManager = new CommandsGame(plugin,beaconListener);
+        CommandsTeam teamManager = new CommandsTeam(plugin);
 
         plugin.getLifecycleManager().registerEventHandler(
                 LifecycleEvents.COMMANDS,
@@ -30,7 +31,7 @@ public class CommandBrigadier {
 
                     root.then(beaconManager.getBeaconCommand());
                     root.then(gameManager.getGameCommand());
-
+                    root.then(teamManager.getTeamCommand());
 
                     event.registrar().register(root.build());
                 }

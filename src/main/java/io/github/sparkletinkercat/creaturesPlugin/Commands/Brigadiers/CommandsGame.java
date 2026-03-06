@@ -52,6 +52,8 @@ public class CommandsGame {
 
             // Open teamSettings.yml
             // If team is enabled then grab it and put it into the team class
+            // Get the list of players online and in a list. 
+            // Assign the roles for each team, removing that player from the list as done so.
             
 
         });

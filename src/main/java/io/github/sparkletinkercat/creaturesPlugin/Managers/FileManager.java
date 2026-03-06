@@ -29,8 +29,13 @@ public class FileManager {
         return file;
     }
 
-    private void updateFile (String path, Object value) {
-        if (!config.contains(fileName + "." + path)) {return;}
-        config.set(fileName + "." + path, value);
+    public void updateFile (String path, Object value) {
+        config.set(path, value);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }
