@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.inventory.Inventory;
 
 public class CommandsGame {
     private final JavaPlugin plugin;
@@ -47,6 +50,10 @@ public class CommandsGame {
             // Add in all registered teams
             // -------------------------------------------
 
+            // Open teamSettings.yml
+            // If team is enabled then grab it and put it into the team class
+            
+
         });
 
         command.createCommandRoot("endGame", player -> {
@@ -59,11 +66,18 @@ public class CommandsGame {
         command.createCommandRoot("newGame", player -> {
             player.sendMessage("You created a new game.");
 
+            InventoryDisplay display = new InventoryDisplay(plugin);
+            display.createMenu(27, "Start a new game");
+            display.createMenuButton (Material.GREEN_WOOL, "Yes", "Start the game with the current game settings.", NamedTextColor.GREEN, 12);
+            display.createMenuButton (Material.RED_WOOL, "No", "", NamedTextColor.RED, 14);
+            display.openInventory(player);
+
             for (Player individualPlayer : Bukkit.getOnlinePlayers()) {
                 PlayerManager playerManager = new PlayerManager(plugin,individualPlayer);
                 playerManager.removeAllNonPermissionTags();
             }
             
+
         });
         
        

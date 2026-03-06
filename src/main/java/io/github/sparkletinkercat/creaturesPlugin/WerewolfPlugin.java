@@ -38,6 +38,9 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
       PlayerListener playerListener = new PlayerListener(this);
       getServer().getPluginManager().registerEvents(playerListener, this);
 
+      MenuListener menuListener = new MenuListener(this);
+      getServer().getPluginManager().registerEvents(menuListener, this);
+
       //Register a command
       BasicCommand yourCommand = new Werewolf();
       registerCommand("werewolf", yourCommand);
