@@ -7,6 +7,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class InformationBar {
     private BossBar bossBar;
@@ -23,6 +24,8 @@ public class InformationBar {
         this.players = new ArrayList<Player> ();
     }
 
+    public InformationBar () {}
+
     public void displayInformationBar (Player player) {
         bossBar.addPlayer(player);
         players.add(player);
@@ -34,11 +37,26 @@ public class InformationBar {
                 if (playerToCheck == player) {
                     bossBar.removePlayer(player);
                 }
-                
             }
-            
         }
     }
+
+    public BossBar getBossBar () {return bossBar;}
+
+    public void removeAllInformationBarsByList (Player player, Map<String, InformationBar> infoBars) {
+        //List<InformationBar> values = new ArrayList<>(infoBars.values());
+
+        
+        
+        for (InformationBar bar : infoBars.values()) {
+            bar.getBossBar().removePlayer(player);
+        }
+            
+        
+
+    }
+
+
 
 
 

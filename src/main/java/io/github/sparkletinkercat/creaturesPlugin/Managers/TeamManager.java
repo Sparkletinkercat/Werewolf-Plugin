@@ -17,11 +17,13 @@ public class TeamManager {
     public void createNewTeam (String teamName,  Object value) {
         FileManager file = new FileManager(plugin, "teamSettings");
         file.updateFile("teams." + teamName + ".enabled", value);
+        file.updateFile("teams." + teamName + ".startingNumber", 0);
     }
 
     public class Team {
         private boolean isEnabled = false;
         private String teamName = null;
+        private int startingNumber = 0;
 
         public Team (String teamName) {
             this.teamName = teamName;
@@ -32,8 +34,17 @@ public class TeamManager {
             this.isEnabled = isEnabled;
         }
 
-        public boolean returnIsEnabled () {return isEnabled;}
-        public String returnTeamName () {return teamName;}
+        public Team (String teamName, boolean isEnabled, int startingNumber) {
+            this.teamName = teamName;
+            this.isEnabled = isEnabled;
+            this.startingNumber = startingNumber;
+        }
+
+        public void setStartingNumber (int startingNumber) {this.startingNumber = startingNumber;}
+
+        public boolean getIsEnabled () {return isEnabled;}
+        public int getStartingNumber () {return startingNumber;}
+        public String getTeamName () {return teamName;}
     }
 
     public List<Team> retrieveAllTeamsFromFile () {
@@ -46,9 +57,21 @@ public class TeamManager {
         for (String name : section.getKeys(false)) {
             YamlConfiguration config = file.returnConfig();
             boolean isEnabled = config.getBoolean("teams." + name + ".enabled");
+            int startingNumber = config.getInt("teams." + name + ".startingNumber");
 
-            teams.add(this.new Team(name, isEnabled));
+            teams.add(this.new Team(name, isEnabled,startingNumber));
         }
+        return teams;
+    }
+
+    public List<Team> retrieveAllEnabledTeamsFromFile () {
+        List<Team> teams = this.retrieveAllTeamsFromFile ();
+        List<Team> enabledTeams = new ArrayList<Team>();
+
+        for (Team team : teams) {
+            if (team.getIsEnabled()) {enabledTeams.add(team);}
+        }
+
         return teams;
     }
 }

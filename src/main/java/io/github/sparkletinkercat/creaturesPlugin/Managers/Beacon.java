@@ -364,6 +364,7 @@ public class Beacon {
                 if (item != null && item.getType() == Material.CARVED_PUMPKIN) {return item;}
             }
         }
+        player.sendMessage("Beacon not nearby");
         return null;
     }
 

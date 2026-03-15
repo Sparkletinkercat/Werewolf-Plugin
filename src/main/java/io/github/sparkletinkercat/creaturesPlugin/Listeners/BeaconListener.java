@@ -12,6 +12,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.Map;
+import org.bukkit.Bukkit;
 
 public class BeaconListener implements Listener {
     private final JavaPlugin plugin;
@@ -33,19 +34,34 @@ public class BeaconListener implements Listener {
         Beacon beacon = new Beacon(plugin);
         ItemStack item = beacon.checkIfBeaconNearby(player, 5);
         
+        //If event is sneaking, start sneak task
 
         if (item != null && event.isSneaking()) {
             InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
             if (beaconInfoBars != null && infoBar != null) {
                 infoBar.displayInformationBar(player);
+                startSneakTask(player);
             }
         } else if (item == null || !event.isSneaking()) {
-            InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
-            if (beaconInfoBars != null && infoBar != null) {
-                infoBar.removeInformationBar(player);
-            }
+            InformationBar infoBar = new InformationBar();
+            infoBar.removeAllInformationBarsByList (player, beaconInfoBars);
         }
 
+    }
+
+    public void startSneakTask(Player player) {
+
+        Bukkit.getScheduler().runTaskTimer(plugin, task -> {
+
+            // Stop if player stops crouching
+            if (!player.isSneaking() || !player.isOnline()) {
+                task.cancel();
+                return;
+            }
+
+            player.sendMessage("Cosencrating");
+
+        }, 0L, 1L); // 1 tick
     }
 
 

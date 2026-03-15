@@ -27,7 +27,7 @@ public class CommandsTeam {
         command.createCommandRoot("createNewTeam", (player, name) -> {
             player.sendMessage("You created a new team.");
             TeamManager team = new TeamManager(plugin);
-            team.createNewTeam("vampires", true);
+            team.createNewTeam(name, true);
         });
 
         

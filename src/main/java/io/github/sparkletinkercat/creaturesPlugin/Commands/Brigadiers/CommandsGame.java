@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.inventory.Inventory;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CommandsGame {
     private final JavaPlugin plugin;
@@ -52,9 +52,36 @@ public class CommandsGame {
 
             // Open teamSettings.yml
             // If team is enabled then grab it and put it into the team class
+            TeamManager teamManager = new TeamManager(plugin);
+            List<TeamManager.Team> teams = teamManager.retrieveAllEnabledTeamsFromFile();
+
             // Get the list of players online and in a list. 
+            PlayerManager playerManager = new PlayerManager(plugin);
+            List<Player> players = playerManager.getAllOnlinePlayers();
+
+            for (Player playertest : players) {
+                player.sendMessage(playertest.getName());
+            }
+
             // Assign the roles for each team, removing that player from the list as done so.
-            
+            for (TeamManager.Team team : teams) {
+                for (int loop = 0; loop < team.getStartingNumber(); loop++) {
+                    if (players.size() == 0) {
+                        player.sendMessage("Too few players for the requested team number. Finishing setup without remaining team numbers");
+                        break;
+                    }
+                    
+                    int randomIndex = ThreadLocalRandom.current().nextInt(players.size());
+                    Player randomPlayer = players.get(randomIndex);
+                    String teamName = team.getTeamName();
+
+                    playerManager.addTagToPlayer(randomPlayer,"team" + teamName.substring(0, 1).toUpperCase() + teamName.substring(1));
+                    players.remove(randomIndex);
+                }
+            }
+
+            // Assign Remaining Players default human role
+            for (Player individualPlayer : players) {playerManager.addTagToPlayer(individualPlayer,"teamHuman");}
 
         });
 
@@ -74,9 +101,9 @@ public class CommandsGame {
             display.createMenuButton (Material.RED_WOOL, "No", "", NamedTextColor.RED, 14);
             display.openInventory(player);
 
+            PlayerManager playerManager = new PlayerManager(plugin);
             for (Player individualPlayer : Bukkit.getOnlinePlayers()) {
-                PlayerManager playerManager = new PlayerManager(plugin,individualPlayer);
-                playerManager.removeAllNonPermissionTags();
+                playerManager.removeAllNonPermissionTags(individualPlayer);
             }
             
 
