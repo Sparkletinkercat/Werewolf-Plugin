@@ -31,33 +31,28 @@ public class BeaconListener implements Listener {
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        Beacon beacon = new Beacon(plugin);
-        ItemStack item = beacon.checkIfBeaconNearby(player, 5);
-        
-        //If event is sneaking, start sneak task
 
-        if (item != null && event.isSneaking()) {
-            InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
-            if (beaconInfoBars != null && infoBar != null) {
-                infoBar.displayInformationBar(player);
-                startSneakTask(player);
-            }
-        } else if (item == null || !event.isSneaking()) {
-            InformationBar infoBar = new InformationBar();
-            infoBar.removeAllInformationBarsByList (player, beaconInfoBars);
-        }
+        if (event.isSneaking()) {startSneakTask(player);}
 
     }
 
     public void startSneakTask(Player player) {
+        Beacon beacon = new Beacon(plugin);
 
         Bukkit.getScheduler().runTaskTimer(plugin, task -> {
+            ItemStack item = beacon.checkIfBeaconNearby(player, 5);
 
-            // Stop if player stops crouching
-            if (!player.isSneaking() || !player.isOnline()) {
+            // Stop if player stops crouching or moves away
+            if (!player.isSneaking() || !player.isOnline() || item == null) {
+                InformationBar infoBar = new InformationBar();
+                infoBar.removeAllInformationBarsByList (player, beaconInfoBars);
                 task.cancel();
                 return;
             }
+
+            InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
+            infoBar.displayInformationBar(player);
+
 
             player.sendMessage("Cosencrating");
 
