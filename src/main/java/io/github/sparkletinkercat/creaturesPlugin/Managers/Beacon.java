@@ -274,18 +274,40 @@ public class Beacon {
 
         public int getType () {return this.type;}
         public String getName () {return this.name;}
+
+        public List<String> getAllBeaconTypeNames () {
+            List<String> allBeaconTypes = new ArrayList<String> ();
+            for (BeaconType type : beaconTypes) {allBeaconTypes.add(type.getName());}
+
+            return allBeaconTypes;
+        }
+
+        public int getTypeByBeaconTypeName (String name) {
+            for (BeaconType type : beaconTypes) {
+                System.out.println(type.getName() + " : " + name);
+                if (type.getName().contains(name)) {
+                    System.out.println("here");
+                    return type.getType();
+                }
+            }
+            return 0;
+        }
+
         public List<BeaconType> getBeaconTypes () {return beaconTypes;}
 
-        private List<BeaconType> retrieveAllBeaconTypes () {
+        private List<BeaconType> retrieveAllBeaconTypes() {
             FileManager file = new FileManager(plugin, "beacons");
-            ConfigurationSection section = file.returnSectionOfFile ("beaconTypes");
-            List<BeaconType> beaconTypes = new ArrayList<BeaconType>();
+            YamlConfiguration config = file.returnConfig();
 
-            for (String name : section.getKeys(false)) {
-                YamlConfiguration config = file.returnConfig();
-                int beaconTypeNumber = config.getInt("beacons." + name + ".type");
+            ConfigurationSection section = config.getConfigurationSection("beaconTypes");
+            List<BeaconType> beaconTypes = new ArrayList<>();
 
-                beaconTypes.add(new BeaconType(name, beaconTypeNumber));
+            if (section != null) {
+                for (String name : section.getKeys(false)) {
+                    int beaconTypeNumber = section.getInt(name + ".type");
+                    System.out.println(name + " -> " + beaconTypeNumber);
+                    beaconTypes.add(new BeaconType(name, beaconTypeNumber));
+                }
             }
 
             return beaconTypes;

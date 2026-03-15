@@ -36,12 +36,12 @@ public class CommandsGame {
             // Get all registered beacon types
             // -------------------------------------------
 
-            Beacon.BeaconType beaconTypes = beacon.new BeaconType ();
-            List<Beacon.BeaconType> allBeaconTypes = beaconTypes.getBeaconTypes();
+            // Beacon.BeaconType beaconTypes = beacon.new BeaconType ();
+            // List<Beacon.BeaconType> allBeaconTypes = beaconTypes.getBeaconTypes();
 
-            for (Beacon.BeaconType type : allBeaconTypes) {
-                player.sendMessage (type.getName());
-            }
+            // for (Beacon.BeaconType type : allBeaconTypes) {
+            //     player.sendMessage (type.getName());
+            // }
             
 
             // -------------------------------------------

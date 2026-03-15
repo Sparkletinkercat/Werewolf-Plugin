@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import java.util.List;
+import java.util.ArrayList;
 
 public class CommandsBeacon {
     private final JavaPlugin plugin;
@@ -20,8 +21,11 @@ public class CommandsBeacon {
         Command command = new Command(plugin, "beacon");
         LiteralArgumentBuilder<CommandSourceStack> root = command.returnCommandRoot();
 
-        // Register larger tree
-        List<String> beaconTypes = List.of("Neutral", "Holy", "Evil");
+
+        Beacon beacon = new Beacon (plugin);
+        Beacon.BeaconType beaconDisplays = beacon.new BeaconType();
+        List<String> beaconTypes = beaconDisplays.getAllBeaconTypeNames();
+
 
         LiteralArgumentBuilder<CommandSourceStack> changeTypeCommand =
                 Commands.literal("changeBeaconType");
@@ -36,12 +40,7 @@ public class CommandsBeacon {
                                     return 0;
                                 }
 
-                                // Replace with your logic to update the beacon model
-                                Beacon beacon = new Beacon(plugin);
-                                
-                                if (type == "Holy") {beacon.changeBeaconDisplay (ctx.getSource(), 664);}
-                                else if (type == "Neutral") {beacon.changeBeaconDisplay (ctx.getSource(), 665);}
-                                else if (type == "Evil") {beacon.changeBeaconDisplay (ctx.getSource(), 666);}
+                                beacon.changeBeaconDisplay (ctx.getSource(), beaconDisplays.getTypeByBeaconTypeName (type));
 
                                 return 1;
                             })
@@ -52,7 +51,6 @@ public class CommandsBeacon {
 
         
         command.createCommandRoot("registerBeacon", (player, name) -> {
-            Beacon beacon = new Beacon(plugin);
             beacon.registerBeacon (player, name);
         });
 
