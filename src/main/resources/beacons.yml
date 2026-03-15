@@ -1,1 +1,12 @@
 beacons:
+
+beaconTypes:
+  desecrated:
+    type: 666
+  holy:
+    type: 664
+  neutral:
+    type: 665
+  damaged:
+    type: 668
+        

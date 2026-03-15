@@ -171,6 +171,10 @@ public class Beacon {
         if (target != null && target.getType() == Material.BARRIER) {
             // Add name metadata
             this.updateMetaData(name, "Name", target.getX(),target.getY(),target.getZ());
+            // Add Conversion Amount
+            this.updateMetaData("50", "ConversionAmount", target.getX(),target.getY(),target.getZ());
+            // Current Controlling Team
+            this.updateMetaData("None", "ControllingTeam", target.getX(),target.getY(),target.getZ());
             // Save Beacon to file
             this.storeBeaconInFile (name,target.getX(),target.getY(),target.getZ());
         } else {
@@ -254,6 +258,38 @@ public class Beacon {
         public double getZ() {return this.z;}
         public String getName() {return this.name;}
 
+    }
+
+    public class BeaconType {
+        private String name;
+        private int type;
+        private static List<BeaconType> beaconTypes;
+
+        public BeaconType (String name, int type) {
+            this.name = name;
+            this.type = type;
+        }
+
+        public BeaconType () {beaconTypes = retrieveAllBeaconTypes();}
+
+        public int getType () {return this.type;}
+        public String getName () {return this.name;}
+        public List<BeaconType> getBeaconTypes () {return beaconTypes;}
+
+        private List<BeaconType> retrieveAllBeaconTypes () {
+            FileManager file = new FileManager(plugin, "beacons");
+            ConfigurationSection section = file.returnSectionOfFile ("beaconTypes");
+            List<BeaconType> beaconTypes = new ArrayList<BeaconType>();
+
+            for (String name : section.getKeys(false)) {
+                YamlConfiguration config = file.returnConfig();
+                int beaconTypeNumber = config.getInt("beacons." + name + ".type");
+
+                beaconTypes.add(new BeaconType(name, beaconTypeNumber));
+            }
+
+            return beaconTypes;
+        }
     }
 
     /**

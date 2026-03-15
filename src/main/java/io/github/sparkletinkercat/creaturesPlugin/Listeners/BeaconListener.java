@@ -53,9 +53,6 @@ public class BeaconListener implements Listener {
             InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
             infoBar.displayInformationBar(player);
 
-
-            player.sendMessage("Cosencrating");
-
         }, 0L, 1L); // 1 tick
     }
 

@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CommandsGame {
     private final JavaPlugin plugin;
-        private final BeaconListener beaconListener;
+    private final BeaconListener beaconListener;
 
     public CommandsGame (JavaPlugin plugin, BeaconListener beaconListener) {
         this.plugin = plugin;
@@ -30,21 +30,38 @@ public class CommandsGame {
         command.createCommandRoot("startGame", player -> {
             player.sendMessage("You started the game.");
 
+            Beacon beacon = new Beacon(plugin);
+
+            // -------------------------------------------
+            // Get all registered beacon types
+            // -------------------------------------------
+
+            Beacon.BeaconType beaconTypes = beacon.new BeaconType ();
+            List<Beacon.BeaconType> allBeaconTypes = beaconTypes.getBeaconTypes();
+
+            for (Beacon.BeaconType type : allBeaconTypes) {
+                player.sendMessage (type.getName());
+            }
+            
+
             // -------------------------------------------
             // Add in all registered beacons
             // -------------------------------------------
 
-            Beacon beacon = new Beacon(plugin);
+            
             List<Beacon.BeaconItem> beaconItems = beacon.retrieveAllBeaconsFromFile();
-            for (Beacon.BeaconItem beaconItem : beaconItems) {
-                player.sendMessage(beaconItem.getName());
-                
-            }
-            beaconListener.importBeaconItems(beaconItems);
+            if (beaconItems != null) {
+                for (Beacon.BeaconItem beaconItem : beaconItems) {
+                    player.sendMessage(beaconItem.getName());
+                    
+                }
+                beaconListener.importBeaconItems(beaconItems);
 
-            // Register all beacon Info bars
-            Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
-            beaconListener.importBeaconInfoBars(beaconInfoBars);
+                // Register all beacon Info bars
+                Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
+                beaconListener.importBeaconInfoBars(beaconInfoBars);
+            }
+            
 
             // -------------------------------------------
             // Add in all registered teams
