@@ -15,6 +15,7 @@ import org.bukkit.entity.Entity;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
@@ -426,6 +427,52 @@ public class Beacon {
         return null;
     }
 
-    
+    public Entity getNearbyBeacon(Player player, int radius, ItemStack itemComparison) {
+        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
+            if (entity instanceof ItemDisplay display) {
+                ItemStack item = display.getItemStack();
+
+                if (item != null && item.getType() == Material.CARVED_PUMPKIN) {return entity;}
+            }
+        }
+        return null;
+    }
+
+    public void consecrateBeacon(Player player, int radius, ItemStack item, InformationBar infoBar) {
+        String controllingTeam = this.getBeaconMetadata(item, "ControllingTeam");
+        int conversionAmount = Integer.parseInt(this.getBeaconMetadata(item, "ConversionAmount"));
+        Entity entity = getNearbyBeacon(player, radius, item);
+        Location target = entity.getLocation();
+
+        // Get a players team
+        PlayerManager playerInfo = new PlayerManager(plugin);
+        String team = playerInfo.getPlayersTagByContains(player,"team").replace("team", "").toLowerCase();
+        
+
+        // Handle if the beacons controlling team is the same as the players
+
+        if (team.contains(controllingTeam)) {
+            if (conversionAmount <= 49) {conversionAmount--;}
+            else if (conversionAmount >= 51) {conversionAmount++;}
+            else {conversionAmount++;}
+        }
+        else {
+            if (conversionAmount < 49) {conversionAmount++;}
+            else if (conversionAmount > 51) {conversionAmount--;}
+            else {
+                if (conversionAmount == 49) {conversionAmount = 51;} 
+                else if (conversionAmount == 51) {conversionAmount = 49;}
+                this.updateMetaData(team, "ControllingTeam", target.getX(),target.getY(),target.getZ());
+            }
+        }
+
+        // Make sure the conversion amount is not greater than or less than the limits
+        if (conversionAmount > 100) {conversionAmount = 100;}
+        else if (conversionAmount < 0) {conversionAmount = 0;}
+
+        player.sendMessage(String.valueOf(conversionAmount));
+        this.updateMetaData(String.valueOf(conversionAmount), "ConversionAmount", target.getX(),target.getY(),target.getZ());
+        infoBar.setBossBarPercentage(conversionAmount);
+    }
 }
 

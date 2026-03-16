@@ -18,12 +18,14 @@ public class TeamManager {
         FileManager file = new FileManager(plugin, "teamSettings");
         file.updateFile("teams." + teamName + ".enabled", value);
         file.updateFile("teams." + teamName + ".startingNumber", 0);
+        file.updateFile("teams." + teamName + ".beaconType", "desecrated");
     }
 
     public class Team {
         private boolean isEnabled = false;
         private String teamName = null;
         private int startingNumber = 0;
+        private String beaconType = null;
 
         public Team (String teamName) {
             this.teamName = teamName;
@@ -34,10 +36,11 @@ public class TeamManager {
             this.isEnabled = isEnabled;
         }
 
-        public Team (String teamName, boolean isEnabled, int startingNumber) {
+        public Team (String teamName, boolean isEnabled, int startingNumber, String beaconType) {
             this.teamName = teamName;
             this.isEnabled = isEnabled;
             this.startingNumber = startingNumber;
+            this.beaconType = beaconType;
         }
 
         public void setStartingNumber (int startingNumber) {this.startingNumber = startingNumber;}
@@ -45,6 +48,7 @@ public class TeamManager {
         public boolean getIsEnabled () {return isEnabled;}
         public int getStartingNumber () {return startingNumber;}
         public String getTeamName () {return teamName;}
+        public String getBeaconTypeName () {return beaconType;}
     }
 
     public List<Team> retrieveAllTeamsFromFile () {
@@ -58,8 +62,9 @@ public class TeamManager {
             YamlConfiguration config = file.returnConfig();
             boolean isEnabled = config.getBoolean("teams." + name + ".enabled");
             int startingNumber = config.getInt("teams." + name + ".startingNumber");
+            String beaconType = config.getString("teams." + name + ".beaconType");
 
-            teams.add(this.new Team(name, isEnabled,startingNumber));
+            teams.add(this.new Team(name, isEnabled,startingNumber,beaconType));
         }
         return teams;
     }

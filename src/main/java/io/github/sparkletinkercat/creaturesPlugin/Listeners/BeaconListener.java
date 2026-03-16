@@ -53,6 +53,9 @@ public class BeaconListener implements Listener {
             InformationBar infoBar = beaconInfoBars.get(beacon.getBeaconMetadata(item,"name"));
             infoBar.displayInformationBar(player);
 
+            // Get beacons controlling team and increament infoBar
+            beacon.consecrateBeacon(player, 5, item, infoBar);
+
         }, 0L, 1L); // 1 tick
     }
 

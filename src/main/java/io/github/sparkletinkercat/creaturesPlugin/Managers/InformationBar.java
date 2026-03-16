@@ -41,18 +41,21 @@ public class InformationBar {
         }
     }
 
+    public void setBossBarPercentage (int value) {
+        double newValue = value;
+        bossBar.setProgress(newValue * 0.01);
+    }
+
     public BossBar getBossBar () {return bossBar;}
 
     public void removeAllInformationBarsByList (Player player, Map<String, InformationBar> infoBars) {
         //List<InformationBar> values = new ArrayList<>(infoBars.values());
 
-        
+        if (infoBars == null) {return;}
         
         for (InformationBar bar : infoBars.values()) {
             bar.getBossBar().removePlayer(player);
         }
-            
-        
 
     }
 

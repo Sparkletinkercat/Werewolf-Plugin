@@ -33,4 +33,11 @@ public class PlayerManager {
 
     public void addTagToPlayer (Player player, String tagName) {player.addScoreboardTag(tagName);}
 
+    public String getPlayersTagByContains (Player player, String contains) {
+        for (String tag : player.getScoreboardTags()) {
+            if (tag.contains(contains)) {return tag;}
+        }
+
+        return null;
+    }
 }
