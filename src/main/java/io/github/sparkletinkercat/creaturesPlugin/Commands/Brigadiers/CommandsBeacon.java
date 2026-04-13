@@ -7,7 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import java.util.List;
-import java.util.ArrayList;
 
 public class CommandsBeacon {
     private final JavaPlugin plugin;
@@ -40,7 +39,7 @@ public class CommandsBeacon {
                                     return 0;
                                 }
 
-                                beacon.changeBeaconDisplay (ctx.getSource(), beaconDisplays.getTypeByBeaconTypeName (type));
+                                beacon.changeBeaconDisplay (ctx.getSource(), Beacon.BeaconType.getTypeByBeaconTypeName (type));
 
                                 return 1;
                             })

@@ -9,6 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class TeamManager {
     private final JavaPlugin plugin;
+    private static List<Team> teamInformation = new ArrayList<Team> ();
     
     public TeamManager (JavaPlugin plugin) {
         this.plugin = plugin;
@@ -64,8 +65,14 @@ public class TeamManager {
             int startingNumber = config.getInt("teams." + name + ".startingNumber");
             String beaconType = config.getString("teams." + name + ".beaconType");
 
-            teams.add(this.new Team(name, isEnabled,startingNumber,beaconType));
+            Team team = this.new Team(name, isEnabled,startingNumber,beaconType);
+            teams.add(team);
+
+            // Store teams in main class for later use. 
+            TeamManager.teamInformation.add(team);
+
         }
+
         return teams;
     }
 
@@ -78,5 +85,17 @@ public class TeamManager {
         }
 
         return teams;
+    }
+
+    public List<Team> retrieveAllTeams () {return teamInformation;}
+
+    public Team retrieveTeamByName (String name) {
+        name = name.toLowerCase();
+
+        for (Team team : teamInformation) {
+            if (team.getTeamName().toLowerCase().equals(name)) {return team;}
+        }
+
+        return null;
     }
 }

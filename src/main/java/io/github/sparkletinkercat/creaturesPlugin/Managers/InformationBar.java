@@ -46,6 +46,10 @@ public class InformationBar {
         bossBar.setProgress(newValue * 0.01);
     }
 
+    public void setBossBarPercentage (double value) {
+        bossBar.setProgress(value * 0.01);
+    }
+
     public BossBar getBossBar () {return bossBar;}
 
     public void removeAllInformationBarsByList (Player player, Map<String, InformationBar> infoBars) {

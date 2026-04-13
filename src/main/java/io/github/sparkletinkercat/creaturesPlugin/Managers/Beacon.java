@@ -155,7 +155,7 @@ public class Beacon {
         // Push the new ItemStack to the ItemDisplay
         itemDisplay.setItemStack(stack);
 
-        System.out.println("Updated beacon display to model ID: " + display);
+        //System.out.println("Updated beacon display to model ID: " + display);
     }
 
     /**
@@ -282,16 +282,15 @@ public class Beacon {
             return allBeaconTypes;
         }
 
-        public int getTypeByBeaconTypeName (String name) {
+        public static int getTypeByBeaconTypeName (String name) {
             for (BeaconType type : beaconTypes) {
-                System.out.println(type.getName() + " : " + name);
                 if (type.getName().contains(name)) {
-                    System.out.println("here");
                     return type.getType();
                 }
             }
             return 0;
         }
+
 
         public List<BeaconType> getBeaconTypes () {return beaconTypes;}
 
@@ -305,7 +304,7 @@ public class Beacon {
             if (section != null) {
                 for (String name : section.getKeys(false)) {
                     int beaconTypeNumber = section.getInt(name + ".type");
-                    System.out.println(name + " -> " + beaconTypeNumber);
+                    //System.out.println(name + " -> " + beaconTypeNumber);
                     beaconTypes.add(new BeaconType(name, beaconTypeNumber));
                 }
             }
@@ -437,40 +436,68 @@ public class Beacon {
         return null;
     }
 
-    public void consecrateBeacon(Player player, int radius, ItemStack item, InformationBar infoBar) {
+    public void consecrateBeacon(Player player, int radius, int limit, ItemStack item, InformationBar infoBar) {
         String controllingTeam = this.getBeaconMetadata(item, "ControllingTeam");
-        int conversionAmount = Integer.parseInt(this.getBeaconMetadata(item, "ConversionAmount"));
+        double conversionAmount = Double.parseDouble(this.getBeaconMetadata(item, "ConversionAmount"));
         Entity entity = getNearbyBeacon(player, radius, item);
         Location target = entity.getLocation();
+
+        int halfLimitMinusOne = limit / 2 - 1;
+        int halfLimitPlusOne = limit / 2 + 1;
 
         // Get a players team
         PlayerManager playerInfo = new PlayerManager(plugin);
         String team = playerInfo.getPlayersTagByContains(player,"team").replace("team", "").toLowerCase();
-        
 
         // Handle if the beacons controlling team is the same as the players
 
         if (team.contains(controllingTeam)) {
-            if (conversionAmount <= 49) {conversionAmount--;}
-            else if (conversionAmount >= 51) {conversionAmount++;}
+            // Get players team beacon 
+            TeamManager teamManager = new TeamManager (plugin);
+            TeamManager.Team teams = teamManager.retrieveTeamByName(team);
+            int type = BeaconType.getTypeByBeaconTypeName(teams.getBeaconTypeName());
+
+            if (conversionAmount <= halfLimitMinusOne) {
+                conversionAmount--;
+                if (conversionAmount <= limit * 0.33) {
+                    this.changeBeaconDisplay(type, target.getX(),target.getY(),target.getZ());
+                }
+            }
+            else if (conversionAmount >= halfLimitPlusOne) {
+                conversionAmount++;
+                if (conversionAmount >= limit * 0.66) {
+                    this.changeBeaconDisplay(type, target.getX(),target.getY(),target.getZ());
+                }
+            }
             else {conversionAmount++;}
         }
         else {
-            if (conversionAmount < 49) {conversionAmount++;}
-            else if (conversionAmount > 51) {conversionAmount--;}
+            if (conversionAmount < halfLimitMinusOne) {
+                conversionAmount++;
+                if (conversionAmount >= limit * 0.33) {
+                    this.changeBeaconDisplay(665, target.getX(),target.getY(),target.getZ());
+                }
+            }
+            else if (conversionAmount > halfLimitPlusOne) {
+                conversionAmount--;
+                if (conversionAmount <= limit * 0.66) {
+                    this.changeBeaconDisplay(665, target.getX(),target.getY(),target.getZ());
+                }
+            }
             else {
-                if (conversionAmount == 49) {conversionAmount = 51;} 
-                else if (conversionAmount == 51) {conversionAmount = 49;}
+                if (conversionAmount == halfLimitMinusOne) {conversionAmount = halfLimitPlusOne;} 
+                else if (conversionAmount == halfLimitPlusOne) {conversionAmount = halfLimitMinusOne;}
                 this.updateMetaData(team, "ControllingTeam", target.getX(),target.getY(),target.getZ());
             }
         }
 
         // Make sure the conversion amount is not greater than or less than the limits
-        if (conversionAmount > 100) {conversionAmount = 100;}
+        if (conversionAmount > limit) {conversionAmount = limit;}
         else if (conversionAmount < 0) {conversionAmount = 0;}
 
         this.updateMetaData(String.valueOf(conversionAmount), "ConversionAmount", target.getX(),target.getY(),target.getZ());
-        infoBar.setBossBarPercentage(conversionAmount);
+        double test = conversionAmount / (double)limit * 100;
+        infoBar.setBossBarPercentage(test);
     }
 }
 
