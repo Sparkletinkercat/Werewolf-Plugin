@@ -6,10 +6,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers.*;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.FileManager;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.Game;
+
 import org.bukkit.event.server.ServerLoadEvent;
 
-import java.io.File;
 
 
 public class WerewolfPlugin extends JavaPlugin implements Listener {
@@ -17,38 +18,26 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
   @Override
   public void onLoad() {}
   
+  
+  /**
+     * Enables and registers all listeners and commands,
+     * Creates the plugin folder and all resource paths.
+     *
+     */
   @Override
   public void onEnable() {
-      Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(this, this);
 
-      // Register Listeners
-      BeaconListener beaconListener = new BeaconListener(this);
-      getServer().getPluginManager().registerEvents(beaconListener, this);
-
-      PlayerListener playerListener = new PlayerListener(this);
-      getServer().getPluginManager().registerEvents(playerListener, this);
-
-      MenuListener menuListener = new MenuListener(this);
-      getServer().getPluginManager().registerEvents(menuListener, this);
-
-
-      new CommandBrigadier(this, beaconListener).registerAll();
-
-      // Create Plugin Folder
-      File folder = getDataFolder();
-      if (!folder.exists()) {
-          folder.mkdirs();
-      }
-
-      saveResource("beacons.yml", false); // copies from jar to data folder
-      saveResource("teamSettings.yml", false);
-      saveResource("settings.yml", false);
+      
+        
+        new CommandBrigadier(this, Game.registerAllListeners(this)).registerAll();
+        
+        FileManager.setupGameFiles(this);
+      
   }
 
   @EventHandler
-  public void onServerLoad(ServerLoadEvent event) {
-      
-  }
+  public void onServerLoad(ServerLoadEvent event) {}
 
   @Override
   public void onDisable() {}

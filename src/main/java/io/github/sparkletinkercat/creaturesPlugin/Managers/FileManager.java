@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class FileManager {
@@ -50,4 +51,17 @@ public class FileManager {
 
     public YamlConfiguration returnConfig () {return config;}
 
+    public static void setupGameFiles (JavaPlugin plugin) {
+        // Create Plugin Folder and required files
+        File folder = plugin.getDataFolder();
+        if (!folder.exists()) {folder.mkdirs();}
+
+        List<String> files = List.of(
+            "beacons.yml",
+            "teamSettings.yml",
+            "settings.yml"
+        );
+
+        for (String item : files) {plugin.saveResource(item, false); }
+    }
 }
