@@ -50,6 +50,7 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
 
       saveResource("beacons.yml", false); // copies from jar to data folder
       saveResource("teamSettings.yml", false);
+      saveResource("settings.yml", false);
   }
 
   @EventHandler

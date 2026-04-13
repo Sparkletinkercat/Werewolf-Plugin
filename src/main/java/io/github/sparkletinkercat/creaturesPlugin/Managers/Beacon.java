@@ -15,7 +15,6 @@ import org.bukkit.entity.Entity;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.entity.Player;
 import org.bukkit.block.Block;
-import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
@@ -470,7 +469,6 @@ public class Beacon {
         if (conversionAmount > 100) {conversionAmount = 100;}
         else if (conversionAmount < 0) {conversionAmount = 0;}
 
-        player.sendMessage(String.valueOf(conversionAmount));
         this.updateMetaData(String.valueOf(conversionAmount), "ConversionAmount", target.getX(),target.getY(),target.getZ());
         infoBar.setBossBarPercentage(conversionAmount);
     }
