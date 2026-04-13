@@ -4,8 +4,6 @@ import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
-import java.util.Map;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,11 +13,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CommandsGame {
     private final JavaPlugin plugin;
-    private final BeaconListener beaconListener;
 
-    public CommandsGame (JavaPlugin plugin, BeaconListener beaconListener) {
+    public CommandsGame (JavaPlugin plugin) {
         this.plugin = plugin;
-        this.beaconListener = beaconListener;
     }
 
     public LiteralArgumentBuilder<CommandSourceStack> getGameCommand() {
@@ -30,7 +26,6 @@ public class CommandsGame {
         command.createCommandRoot("startGame", player -> {
             player.sendMessage("You started the game.");
 
-            Beacon beacon = new Beacon(plugin);
 
             // -------------------------------------------
             // Get all registered beacon types
@@ -48,19 +43,8 @@ public class CommandsGame {
             // Add in all registered beacons
             // -------------------------------------------
 
-            
-            List<Beacon.BeaconItem> beaconItems = beacon.retrieveAllBeaconsFromFile();
-            if (beaconItems != null) {
-                for (Beacon.BeaconItem beaconItem : beaconItems) {
-                    player.sendMessage(beaconItem.getName());
-                    
-                }
-                beaconListener.importBeaconItems(beaconItems);
-
-                // Register all beacon Info bars
-                Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
-                beaconListener.importBeaconInfoBars(beaconInfoBars);
-            }
+            Game game = new Game (plugin);
+            game.setupAllBeacons ();
             
 
             // -------------------------------------------
@@ -73,8 +57,7 @@ public class CommandsGame {
             List<TeamManager.Team> teams = teamManager.retrieveAllEnabledTeamsFromFile();
 
             // Get the list of players online and in a list. 
-            PlayerManager playerManager = new PlayerManager(plugin);
-            List<Player> players = playerManager.getAllOnlinePlayers();
+            List<Player> players = PluginPlayer.getAllOnlinePlayers();
 
             for (Player playertest : players) {
                 player.sendMessage(playertest.getName());
@@ -92,13 +75,13 @@ public class CommandsGame {
                     Player randomPlayer = players.get(randomIndex);
                     String teamName = team.getTeamName();
 
-                    playerManager.addTagToPlayer(randomPlayer,"team" + teamName.substring(0, 1).toUpperCase() + teamName.substring(1));
+                    PluginPlayer.addTagToPlayer(randomPlayer,"team" + teamName.substring(0, 1).toUpperCase() + teamName.substring(1));
                     players.remove(randomIndex);
                 }
             }
 
             // Assign Remaining Players default human role
-            for (Player individualPlayer : players) {playerManager.addTagToPlayer(individualPlayer,"teamHuman");}
+            for (Player individualPlayer : players) {PluginPlayer.addTagToPlayer(individualPlayer,"teamHuman");}
 
         });
 
@@ -115,9 +98,8 @@ public class CommandsGame {
             display.createMenuButton (Material.RED_WOOL, "No", "", NamedTextColor.RED, 14);
             display.openInventory(player);
 
-            PlayerManager playerManager = new PlayerManager(plugin);
             for (Player individualPlayer : Bukkit.getOnlinePlayers()) {
-                playerManager.removeAllNonPermissionTags(individualPlayer);
+                PluginPlayer.removeAllNonPermissionTags(individualPlayer);
             }
             
 

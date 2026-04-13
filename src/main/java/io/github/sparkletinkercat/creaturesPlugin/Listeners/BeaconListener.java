@@ -6,27 +6,35 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
-import org.bukkit.entity.Entity;  
-import org.bukkit.Material;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
 
 public class BeaconListener implements Listener {
     private final JavaPlugin plugin;
-    private List<Beacon.BeaconItem> beaconItems;
-    private Map<String, InformationBar> beaconInfoBars;
+    private static List<Beacon.BeaconItem> beaconItems = new ArrayList<Beacon.BeaconItem>();
+    private static Map<String, InformationBar> beaconInfoBars = new HashMap<String, InformationBar>();
 
     public BeaconListener (JavaPlugin plugin) {
         this.plugin = plugin;
-        this.beaconItems = null;
-        this.beaconInfoBars = null;
     }
 
-    public void importBeaconItems (List<Beacon.BeaconItem> beaconItems) {this.beaconItems = beaconItems;}
-    public void importBeaconInfoBars (Map<String, InformationBar> beaconInfoBars) {this.beaconInfoBars = beaconInfoBars;}
+    public static void importBeaconItems (List<Beacon.BeaconItem> importedBeaconItems) {
+        beaconItems.clear();
+        for (Beacon.BeaconItem beaconItem : importedBeaconItems) {beaconItems.add(beaconItem);}
+    }
+
+    public static void importBeaconInfoBars (Map<String, InformationBar> importedBeaconInfoBars) {
+        beaconInfoBars.clear();
+        beaconInfoBars.putAll(importedBeaconInfoBars);
+    }
+
+    public static List<Beacon.BeaconItem> getBeaconItems() {return beaconItems;}
+    public static Map<String, InformationBar> getBeaconInforBars() {return beaconInfoBars;}
     
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {

@@ -29,15 +29,19 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
 
       
-        
-        new CommandBrigadier(this, Game.registerAllListeners(this)).registerAll();
+        Game.registerAllListeners(this);
+        new CommandBrigadier(this).registerAll();
         
         FileManager.setupGameFiles(this);
-      
+
+        
   }
 
   @EventHandler
-  public void onServerLoad(ServerLoadEvent event) {}
+  public void onServerLoad(ServerLoadEvent event) {
+        Game game = new Game (this);
+        game.setupAllBeacons ();
+  }
 
   @Override
   public void onDisable() {}

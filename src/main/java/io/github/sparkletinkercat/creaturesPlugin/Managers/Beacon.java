@@ -452,7 +452,7 @@ public class Beacon {
         int halfLimitPlusOne = limit / 2 + 1;
 
         // Get a players team
-        PlayerManager playerInfo = new PlayerManager(plugin);
+        PluginPlayer playerInfo = new PluginPlayer(player);
         String team = playerInfo.getPlayersTagByContains(player,"team").replace("team", "").toLowerCase();
 
         // Handle if the beacons controlling team is the same as the players

@@ -5,21 +5,18 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
 
 public class CommandBrigadier {
 
     private final JavaPlugin plugin;
-    private final BeaconListener beaconListener;
 
-    public CommandBrigadier(JavaPlugin plugin, BeaconListener beaconListener) {
+    public CommandBrigadier(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.beaconListener = beaconListener;
     }
 
     public void registerAll() {
         CommandsBeacon beaconManager = new CommandsBeacon(plugin);
-        CommandsGame gameManager = new CommandsGame(plugin,beaconListener);
+        CommandsGame gameManager = new CommandsGame(plugin);
         CommandsTeam teamManager = new CommandsTeam(plugin);
 
         plugin.getLifecycleManager().registerEventHandler(

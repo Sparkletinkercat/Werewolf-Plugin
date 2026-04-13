@@ -6,6 +6,7 @@ import io.github.sparkletinkercat.creaturesPlugin.Listeners.MenuListener;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.PlayerListener;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.event.Listener;
 
@@ -16,7 +17,7 @@ public class Game {
         this.plugin = plugin;
     }
 
-    public static BeaconListener registerAllListeners (JavaPlugin plugin) {
+    public static void registerAllListeners (JavaPlugin plugin) {
         // Register Listeners
         List<Listener> listeners = List.of(
             new BeaconListener(plugin),
@@ -27,8 +28,22 @@ public class Game {
         for (Listener item : listeners) {
             plugin.getServer().getPluginManager().registerEvents(item, plugin);
         }
+    }
 
-        return (BeaconListener) listeners.get(0);
+
+    public void setupAllBeacons () {
+        Beacon beacon = new Beacon(plugin);
+        System.out.println("here1");
+        List<Beacon.BeaconItem> beaconItems = beacon.retrieveAllBeaconsFromFile();
+        System.out.println("here2");
+        if (beaconItems != null) {
+            System.out.println("here3");
+            BeaconListener.importBeaconItems(beaconItems);
+
+            // Register all beacon Info bars
+            Map<String, InformationBar> beaconInfoBars = beacon.createBeaconInformationBars (beaconItems);
+            BeaconListener.importBeaconInfoBars(beaconInfoBars);
+        }
     }
     
 }

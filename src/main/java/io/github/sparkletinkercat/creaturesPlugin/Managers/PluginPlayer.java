@@ -1,9 +1,12 @@
 package io.github.sparkletinkercat.creaturesPlugin.Managers;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PluginPlayer {
     String teamName = "";
@@ -39,4 +42,28 @@ public class PluginPlayer {
 
     public Object getPlayerInformation (String key) {return this.playerInformation.get(key);}
 
+    public static List<Player> getAllOnlinePlayers () {
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        return players;
+    }
+
+    public static void removeAllNonPermissionTags (Player player) {
+        Set<String> tags = player.getScoreboardTags();
+
+        for (String tag : tags) {
+            if (!tag.contains("permission")) {
+                player.removeScoreboardTag(tag);
+            }
+        }
+    }
+
+    public static void addTagToPlayer (Player player, String tagName) {player.addScoreboardTag(tagName);}
+
+    public String getPlayersTagByContains (Player player, String contains) {
+        for (String tag : player.getScoreboardTags()) {
+            if (tag.contains(contains)) {return tag;}
+        }
+
+        return null;
+    }
 }
