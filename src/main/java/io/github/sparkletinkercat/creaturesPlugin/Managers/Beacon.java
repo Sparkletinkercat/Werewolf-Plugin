@@ -93,6 +93,12 @@ public class Beacon {
      */
     public void removeBeaconDisplay (double x, double y, double z) {
         Entity entity = returnBeaconAtLocation(x + 0.5,y + 0.5,z + 0.5);
+        // If beacon exists in file, remove it
+        String beaconName = getBeaconMetadata (entity, "name");
+        if (beaconName != null) {
+            FileManager file = new FileManager(plugin, "beacons");
+            file.removeSectionOfFile("beacons",beaconName);
+        }
         if (entity != null) {entity.remove();}
     }
 

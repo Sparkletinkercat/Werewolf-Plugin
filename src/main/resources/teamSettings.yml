@@ -1,1 +1,13 @@
 teams:
+  Vampire:
+    enabled: true
+    startingNumber: 0
+    beaconType: desecrated
+  Human:
+    enabled: true
+    startingNumber: 0
+    beaconType: holy
+  Werewolf:
+    enabled: true
+    startingNumber: 1
+    beaconType: damaged

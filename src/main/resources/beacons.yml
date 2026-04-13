@@ -1,5 +1,3 @@
-beacons:
-
 beaconTypes:
   desecrated:
     type: 666
@@ -9,4 +7,4 @@ beaconTypes:
     type: 665
   damaged:
     type: 668
-        
+beacons: {}

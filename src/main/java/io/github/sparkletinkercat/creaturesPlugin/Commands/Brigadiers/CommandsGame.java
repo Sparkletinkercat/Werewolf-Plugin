@@ -104,9 +104,6 @@ public class CommandsGame {
 
         command.createCommandRoot("endGame", player -> {
             player.sendMessage("You ended the game.");
-
-            
-            
         });
 
         command.createCommandRoot("newGame", player -> {

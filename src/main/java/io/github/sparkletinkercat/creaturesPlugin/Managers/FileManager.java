@@ -43,6 +43,11 @@ public class FileManager {
         return section;
     }
 
+    public void removeSectionOfFile(String mainSection, String sectionName) {
+        String path = mainSection + "." + sectionName;
+        updateFile (path, null);
+    }
+
     public YamlConfiguration returnConfig () {return config;}
 
 }
