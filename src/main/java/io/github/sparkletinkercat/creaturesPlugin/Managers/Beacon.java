@@ -18,6 +18,8 @@ import org.bukkit.block.Block;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
@@ -112,9 +114,18 @@ public class Beacon {
             if (entity instanceof ItemDisplay itemDisplay) {
                 ItemStack stack = itemDisplay.getItemStack();
                 ItemMeta meta = stack.getItemMeta();
-                NamespacedKey key = new NamespacedKey(plugin, "type");
 
+                NamespacedKey key = new NamespacedKey(plugin, "type");
                 String value = meta.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+
+                //extra
+                NamespacedKey key2 = new NamespacedKey(plugin, "name");
+                NamespacedKey key3 = new NamespacedKey(plugin, "controllingteam");
+                String value2 = meta.getPersistentDataContainer().get(key2, PersistentDataType.STRING);
+                String value3 = meta.getPersistentDataContainer().get(key3, PersistentDataType.STRING);
+
+                
+
                 if (value.toLowerCase().contains("beacon")) {
                     returnEntity = entity;
                     break;

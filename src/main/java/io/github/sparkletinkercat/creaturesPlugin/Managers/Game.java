@@ -84,40 +84,41 @@ public class Game {
         teamManager.retrieveAllEnabledTeamsFromFile();
     }
 
-    // Beacons need to be switched
     public void checkBeaconGameState () {
         List<Beacon.BeaconItem> beacons = BeaconListener.getBeaconItems();
+        Beacon beaconManager = new Beacon(plugin);
         Map<String, Integer> controllingTeams = new HashMap<String, Integer>();
         int beaconNumber = 0;
 
         for (Beacon.BeaconItem beacon : beacons) {
             beaconNumber++;
-            Beacon beaconManager = new Beacon(plugin);
-            String controllingTeam = beaconManager.getBeaconMetadata (beaconManager.returnBeaconAtLocation (beacon.getX(), beacon.getY(), beacon.getZ()), "ControllingTeam");
             
+            String controllingTeam = beaconManager.getBeaconMetadata (beaconManager.returnBeaconAtLocation (beacon.getX(), beacon.getY(), beacon.getZ()), "ControllingTeam");
             controllingTeams.put(controllingTeam, controllingTeams.getOrDefault(controllingTeam, 0) + 1);
         }
 
-        for (Map.Entry<String, Integer> entry : controllingTeams.entrySet()) {
-            
 
-            if (entry.getValue() == beaconNumber) {
-                Bukkit.broadcast(
-                    Component.text("All beacons are controlled by :" + entry.getKey(), NamedTextColor.RED)
-                );
-            }
+        
+        boolean controlsAllBeacons = false; 
+        for (Player player : PluginPlayer.getAllOnlinePlayers ()) {
+            PluginPlayer playerManager = new PluginPlayer(player);
+            boolean controlsABeacon = false;
             
-            for (Player player : PluginPlayer.getAllOnlinePlayers ()) {
-                PluginPlayer playerManager = new PluginPlayer(player);
-                if (playerManager.getPlayersTagByContains (player, entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1)) == null)  {
-                    break;
+            for (Map.Entry<String, Integer> entry : controllingTeams.entrySet()) {
+                String team = entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1);
+                if (playerManager.getPlayersTagByContains (player, team) != null) {
+                    controlsABeacon = true;
+                    PluginPlayer.setAttribute("MAX_HEALTH", player, plugin, entry.getValue() * 2);
                 }
-                Bukkit.broadcast(
-                    Component.text(entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1), NamedTextColor.RED)
-                );
-                
-                PluginPlayer.setAttribute("MAX_HEALTH", player, plugin, entry.getValue() * 2);
-            
+
+                if (entry.getValue() == beaconNumber && controlsAllBeacons != true) {
+                    controlsAllBeacons = true;
+                    Bukkit.broadcast(
+                        Component.text("All beacons are controlled by :" + entry.getKey(), NamedTextColor.RED)
+                    );
+                }
+            }
+            if (controlsABeacon == false) {
                 PluginPlayer.removeAllAtributes(player,plugin);
             }
         }
