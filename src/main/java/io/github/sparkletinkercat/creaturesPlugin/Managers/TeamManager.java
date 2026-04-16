@@ -20,6 +20,7 @@ public class TeamManager {
         file.updateFile("teams." + teamName + ".enabled", value);
         file.updateFile("teams." + teamName + ".startingNumber", 0);
         file.updateFile("teams." + teamName + ".beaconType", "desecrated");
+        file.updateFile("teams." + teamName + ".allBeaconsControlledBonus", "hearts");
     }
 
     public class Team {
@@ -27,6 +28,7 @@ public class TeamManager {
         private String teamName = null;
         private int startingNumber = 0;
         private String beaconType = null;
+        private String allBeaconsControlledBonus = null;
 
         public Team (String teamName) {
             this.teamName = teamName;
@@ -37,11 +39,12 @@ public class TeamManager {
             this.isEnabled = isEnabled;
         }
 
-        public Team (String teamName, boolean isEnabled, int startingNumber, String beaconType) {
+        public Team (String teamName, boolean isEnabled, int startingNumber, String beaconType, String allBeaconsControlledBonus) {
             this.teamName = teamName;
             this.isEnabled = isEnabled;
             this.startingNumber = startingNumber;
             this.beaconType = beaconType;
+            this.allBeaconsControlledBonus = allBeaconsControlledBonus;
         }
 
         public void setStartingNumber (int startingNumber) {this.startingNumber = startingNumber;}
@@ -50,6 +53,7 @@ public class TeamManager {
         public int getStartingNumber () {return startingNumber;}
         public String getTeamName () {return teamName;}
         public String getBeaconTypeName () {return beaconType;}
+        public String getAllBeaconsControlledBonus () {return allBeaconsControlledBonus;}
     }
 
     public List<Team> retrieveAllTeamsFromFile () {
@@ -64,8 +68,9 @@ public class TeamManager {
             boolean isEnabled = config.getBoolean("teams." + name + ".enabled");
             int startingNumber = config.getInt("teams." + name + ".startingNumber");
             String beaconType = config.getString("teams." + name + ".beaconType");
+            String allBeaconsControlledBonus = config.getString("teams." + name + ".allBeaconsControlledBonus");
 
-            Team team = this.new Team(name, isEnabled,startingNumber,beaconType);
+            Team team = this.new Team(name, isEnabled,startingNumber,beaconType,allBeaconsControlledBonus);
             teams.add(team);
 
             // Store teams in main class for later use. 

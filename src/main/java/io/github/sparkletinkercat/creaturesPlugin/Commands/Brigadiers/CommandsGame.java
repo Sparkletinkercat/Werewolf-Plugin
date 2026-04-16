@@ -27,61 +27,10 @@ public class CommandsGame {
             player.sendMessage("You started the game.");
 
 
-            // -------------------------------------------
-            // Get all registered beacon types
-            // -------------------------------------------
-
-            // Beacon.BeaconType beaconTypes = beacon.new BeaconType ();
-            // List<Beacon.BeaconType> allBeaconTypes = beaconTypes.getBeaconTypes();
-
-            // for (Beacon.BeaconType type : allBeaconTypes) {
-            //     player.sendMessage (type.getName());
-            // }
-            
-
-            // -------------------------------------------
-            // Add in all registered beacons
-            // -------------------------------------------
-
             Game game = new Game (plugin);
             game.setupAllBeacons ();
+            game.setupAllTeams();
             
-
-            // -------------------------------------------
-            // Add in all registered teams
-            // -------------------------------------------
-
-            // Open teamSettings.yml
-            // If team is enabled then grab it and put it into the team class
-            TeamManager teamManager = new TeamManager(plugin);
-            List<TeamManager.Team> teams = teamManager.retrieveAllEnabledTeamsFromFile();
-
-            // Get the list of players online and in a list. 
-            List<Player> players = PluginPlayer.getAllOnlinePlayers();
-
-            for (Player playertest : players) {
-                player.sendMessage(playertest.getName());
-            }
-
-            // Assign the roles for each team, removing that player from the list as done so.
-            for (TeamManager.Team team : teams) {
-                for (int loop = 0; loop < team.getStartingNumber(); loop++) {
-                    if (players.size() == 0) {
-                        player.sendMessage("Too few players for the requested team number. Finishing setup without remaining team numbers");
-                        break;
-                    }
-                    
-                    int randomIndex = ThreadLocalRandom.current().nextInt(players.size());
-                    Player randomPlayer = players.get(randomIndex);
-                    String teamName = team.getTeamName();
-
-                    PluginPlayer.addTagToPlayer(randomPlayer,"team" + teamName.substring(0, 1).toUpperCase() + teamName.substring(1));
-                    players.remove(randomIndex);
-                }
-            }
-
-            // Assign Remaining Players default human role
-            for (Player individualPlayer : players) {PluginPlayer.addTagToPlayer(individualPlayer,"teamHuman");}
 
         });
 

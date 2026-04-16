@@ -3,11 +3,14 @@ teams:
     enabled: true
     startingNumber: 0
     beaconType: desecrated
+    allBeaconsControlledBonus: hearts
   Human:
     enabled: true
     startingNumber: 0
     beaconType: holy
+    allBeaconsControlledBonus: hearts
   Werewolf:
     enabled: true
     startingNumber: 1
     beaconType: damaged
+    allBeaconsControlledBonus: hearts

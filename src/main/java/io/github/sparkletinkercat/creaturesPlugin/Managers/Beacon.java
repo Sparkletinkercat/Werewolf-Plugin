@@ -181,6 +181,9 @@ public class Beacon {
             this.updateMetaData("50", "ConversionAmount", target.getX(),target.getY(),target.getZ());
             // Current Controlling Team
             this.updateMetaData("None", "ControllingTeam", target.getX(),target.getY(),target.getZ());
+            // Check when converted to team
+            this.updateMetaData("false", "UpdatedGameState", target.getX(),target.getY(),target.getZ());
+
             // Save Beacon to file
             this.storeBeaconInFile (name,target.getX(),target.getY(),target.getZ());
         } else {
@@ -445,8 +448,10 @@ public class Beacon {
     public void consecrateBeacon(Player player, int radius, int limit, ItemStack item, InformationBar infoBar) {
         String controllingTeam = this.getBeaconMetadata(item, "ControllingTeam");
         double conversionAmount = Double.parseDouble(this.getBeaconMetadata(item, "ConversionAmount"));
+        String updatedGameState = this.getBeaconMetadata(item, "UpdatedGameState");
         Entity entity = getNearbyBeacon(player, radius, item);
         Location target = entity.getLocation();
+        Game game = new Game(plugin);
 
         int halfLimitMinusOne = limit / 2 - 1;
         int halfLimitPlusOne = limit / 2 + 1;
@@ -467,12 +472,25 @@ public class Beacon {
                 conversionAmount--;
                 if (conversionAmount <= limit * 0.33) {
                     this.changeBeaconDisplay(type, target.getX(),target.getY(),target.getZ());
+
+                    // Update game state
+                    if (updatedGameState.equals("false")) {
+                        game.checkBeaconGameState ();
+                        this.updateMetaData("true", "UpdatedGameState", target.getX(),target.getY(),target.getZ());
+                    }
                 }
             }
             else if (conversionAmount >= halfLimitPlusOne) {
                 conversionAmount++;
                 if (conversionAmount >= limit * 0.66) {
                     this.changeBeaconDisplay(type, target.getX(),target.getY(),target.getZ());
+
+                    // Update game state
+                    if (updatedGameState.equals("false")) {
+                        this.updateMetaData("true", "UpdatedGameState", target.getX(),target.getY(),target.getZ());
+                        game.checkBeaconGameState ();
+                    }
+                    
                 }
             }
             else {conversionAmount++;}
@@ -494,6 +512,7 @@ public class Beacon {
                 if (conversionAmount == halfLimitMinusOne) {conversionAmount = halfLimitPlusOne;} 
                 else if (conversionAmount == halfLimitPlusOne) {conversionAmount = halfLimitMinusOne;}
                 this.updateMetaData(team, "ControllingTeam", target.getX(),target.getY(),target.getZ());
+                this.updateMetaData("false", "UpdatedGameState", target.getX(),target.getY(),target.getZ());
             }
         }
 

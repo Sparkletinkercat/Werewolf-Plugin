@@ -4,10 +4,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.BeaconListener;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.MenuListener;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.PlayerListener;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class Game {
@@ -45,5 +53,75 @@ public class Game {
             BeaconListener.importBeaconInfoBars(beaconInfoBars);
         }
     }
+
+    public void setupAllTeams () {
+        TeamManager teamManager = new TeamManager(plugin);
+        List<TeamManager.Team> teams = teamManager.retrieveAllEnabledTeamsFromFile();
+
+        // Get the list of players online and in a list. 
+        List<Player> players = PluginPlayer.getAllOnlinePlayers();
+    
+        // Assign the roles for each team, removing that player from the list as done so.
+        for (TeamManager.Team team : teams) {
+            for (int loop = 0; loop < team.getStartingNumber(); loop++) {
+                if (players.size() == 0) {break;}
+                
+                int randomIndex = ThreadLocalRandom.current().nextInt(players.size());
+                Player randomPlayer = players.get(randomIndex);
+                String teamName = team.getTeamName();
+
+                PluginPlayer.addTagToPlayer(randomPlayer,"team" + teamName.substring(0, 1).toUpperCase() + teamName.substring(1));
+                players.remove(randomIndex);
+            }
+        }
+
+        // Assign Remaining Players default human role
+        for (Player individualPlayer : players) {PluginPlayer.addTagToPlayer(individualPlayer,"teamHuman");}
+    }
+
+    public void getTeams () {
+        TeamManager teamManager = new TeamManager(plugin);
+        teamManager.retrieveAllEnabledTeamsFromFile();
+    }
+
+    // Beacons need to be switched
+    public void checkBeaconGameState () {
+        List<Beacon.BeaconItem> beacons = BeaconListener.getBeaconItems();
+        Map<String, Integer> controllingTeams = new HashMap<String, Integer>();
+        int beaconNumber = 0;
+
+        for (Beacon.BeaconItem beacon : beacons) {
+            beaconNumber++;
+            Beacon beaconManager = new Beacon(plugin);
+            String controllingTeam = beaconManager.getBeaconMetadata (beaconManager.returnBeaconAtLocation (beacon.getX(), beacon.getY(), beacon.getZ()), "ControllingTeam");
+            
+            controllingTeams.put(controllingTeam, controllingTeams.getOrDefault(controllingTeam, 0) + 1);
+        }
+
+        for (Map.Entry<String, Integer> entry : controllingTeams.entrySet()) {
+            
+
+            if (entry.getValue() == beaconNumber) {
+                Bukkit.broadcast(
+                    Component.text("All beacons are controlled by :" + entry.getKey(), NamedTextColor.RED)
+                );
+            }
+            
+            for (Player player : PluginPlayer.getAllOnlinePlayers ()) {
+                PluginPlayer playerManager = new PluginPlayer(player);
+                if (playerManager.getPlayersTagByContains (player, entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1)) == null)  {
+                    break;
+                }
+                Bukkit.broadcast(
+                    Component.text(entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1), NamedTextColor.RED)
+                );
+                
+                PluginPlayer.setAttribute("MAX_HEALTH", player, plugin, entry.getValue() * 2);
+            
+                PluginPlayer.removeAllAtributes(player,plugin);
+            }
+        }
+    }
+
     
 }
