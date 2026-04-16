@@ -20,7 +20,8 @@ public class TeamManager {
         file.updateFile("teams." + teamName + ".enabled", value);
         file.updateFile("teams." + teamName + ".startingNumber", 0);
         file.updateFile("teams." + teamName + ".beaconType", "desecrated");
-        file.updateFile("teams." + teamName + ".allBeaconsControlledBonus", "hearts");
+        file.updateFile("teams." + teamName + ".beaconControlBonus", "MAX_HEALTH");
+        file.updateFile("teams." + teamName + ".beaconControlBonusPerLevel", 1);
     }
 
     public class Team {
@@ -28,7 +29,8 @@ public class TeamManager {
         private String teamName = null;
         private int startingNumber = 0;
         private String beaconType = null;
-        private String allBeaconsControlledBonus = null;
+        private String beaconControlBonus = null;
+        private double beaconControlBonusPerLevel = 0;
 
         public Team (String teamName) {
             this.teamName = teamName;
@@ -39,12 +41,13 @@ public class TeamManager {
             this.isEnabled = isEnabled;
         }
 
-        public Team (String teamName, boolean isEnabled, int startingNumber, String beaconType, String allBeaconsControlledBonus) {
+        public Team (String teamName, boolean isEnabled, int startingNumber, String beaconType, String beaconControlBonus, double beaconControlBonusPerLevel) {
             this.teamName = teamName;
             this.isEnabled = isEnabled;
             this.startingNumber = startingNumber;
             this.beaconType = beaconType;
-            this.allBeaconsControlledBonus = allBeaconsControlledBonus;
+            this.beaconControlBonus = beaconControlBonus;
+            this.beaconControlBonusPerLevel = beaconControlBonusPerLevel;
         }
 
         public void setStartingNumber (int startingNumber) {this.startingNumber = startingNumber;}
@@ -53,7 +56,8 @@ public class TeamManager {
         public int getStartingNumber () {return startingNumber;}
         public String getTeamName () {return teamName;}
         public String getBeaconTypeName () {return beaconType;}
-        public String getAllBeaconsControlledBonus () {return allBeaconsControlledBonus;}
+        public String getAllBeaconsControlledBonus () {return beaconControlBonus;}
+        public double getbeaconControlBonusPerLevel  () {return beaconControlBonusPerLevel; }
     }
 
     public List<Team> retrieveAllTeamsFromFile () {
@@ -68,9 +72,10 @@ public class TeamManager {
             boolean isEnabled = config.getBoolean("teams." + name + ".enabled");
             int startingNumber = config.getInt("teams." + name + ".startingNumber");
             String beaconType = config.getString("teams." + name + ".beaconType");
-            String allBeaconsControlledBonus = config.getString("teams." + name + ".allBeaconsControlledBonus");
+            String beaconControlBonus = config.getString("teams." + name + ".beaconControlBonus");
+            double beaconControlBonusPerLevel = config.getDouble("teams." + name + ".beaconControlBonusPerLevel");
 
-            Team team = this.new Team(name, isEnabled,startingNumber,beaconType,allBeaconsControlledBonus);
+            Team team = this.new Team(name, isEnabled,startingNumber,beaconType,beaconControlBonus, beaconControlBonusPerLevel);
             teams.add(team);
 
             // Store teams in main class for later use. 
@@ -95,6 +100,16 @@ public class TeamManager {
     public List<Team> retrieveAllTeams () {return teamInformation;}
 
     public Team retrieveTeamByName (String name) {
+        name = name.toLowerCase();
+
+        for (Team team : teamInformation) {
+            if (team.getTeamName().toLowerCase().equals(name)) {return team;}
+        }
+
+        return null;
+    }
+
+    public static Team getTeamByName (String name) {
         name = name.toLowerCase();
 
         for (Team team : teamInformation) {

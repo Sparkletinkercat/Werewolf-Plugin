@@ -6,6 +6,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+
 import java.util.Set;
 import java.util.UUID;
 import java.util.ArrayList;
@@ -77,7 +80,7 @@ public class PluginPlayer {
         return null;
     }
 
-    public static void setAttribute (String attributeName, Player player, JavaPlugin plugin, int attributeBonus) {
+    public static void setAttribute (String attributeName, Player player, JavaPlugin plugin, double attributeBonus) {
         Attribute attribute = Registry.ATTRIBUTE.get(
             NamespacedKey.fromString(attributeName.toLowerCase())
         );
@@ -86,7 +89,7 @@ public class PluginPlayer {
         AttributeInstance instance = player.getAttribute(attribute);
 
         if (instance != null) {
-            NamespacedKey key = new NamespacedKey(plugin, "bonus_health");
+            NamespacedKey key = new NamespacedKey(plugin, "bonus_beacon");
             instance.removeModifier(key);
 
             AttributeModifier bonus = new AttributeModifier(
@@ -107,12 +110,12 @@ public class PluginPlayer {
 
             if (instance == null) continue;
 
+
             for (AttributeModifier modifier : instance.getModifiers()) {
                 NamespacedKey key = modifier.getKey();
 
-                if (key.getNamespace().equals(plugin.getName().toLowerCase())
-                        && key.getKey().startsWith(targetPrefix)) {
-
+                if (key.getNamespace().equals(plugin.getName().toLowerCase()) && key.getKey().startsWith(targetPrefix)) {
+                    
                     instance.removeModifier(modifier);
                 }
             }

@@ -108,7 +108,16 @@ public class Game {
                 String team = entry.getKey().substring(0, 1).toUpperCase() + entry.getKey().substring(1);
                 if (playerManager.getPlayersTagByContains (player, team) != null) {
                     controlsABeacon = true;
-                    PluginPlayer.setAttribute("MAX_HEALTH", player, plugin, entry.getValue() * 2);
+
+                    // Get team specific bonus
+                    TeamManager.Team teamData = TeamManager.getTeamByName (team);
+                    String attributeBonus = teamData.getAllBeaconsControlledBonus();
+                    double bonusPerLevel = teamData.getbeaconControlBonusPerLevel();
+                    PluginPlayer.removeAllAtributes(player,plugin);
+                    Bukkit.broadcast(
+                        Component.text((double) entry.getValue() * bonusPerLevel, NamedTextColor.RED)
+                    );
+                    PluginPlayer.setAttribute(attributeBonus, player, plugin, (double) entry.getValue() * bonusPerLevel);
                 }
 
                 if (entry.getValue() == beaconNumber && controlsAllBeacons != true) {
