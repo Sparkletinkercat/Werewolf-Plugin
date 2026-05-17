@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -20,6 +22,8 @@ import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.potion.PotionEffectType;
+import net.kyori.adventure.key.Key;
 
 public class PluginPlayer {
     String teamName = "";
@@ -121,4 +125,6 @@ public class PluginPlayer {
             }
         }
     }
+
+    
 }

@@ -54,6 +54,23 @@ public class CommandsGame {
             
 
         });
+
+        command.createCommandRoot("pauseGame", player -> {
+            player.sendMessage("You have paused the game.");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tick freeze");
+            PotionEffects.storePlayersCurrentEffects (player);
+            PotionEffects.clearAllEffectsFromPlayer(player);
+            PotionEffects.givePotionEffectToAll("SPEED", 0);
+            //PotionEffects.givePotionEffect(player,"WEAKNESS", 255, -1);
+            //PotionEffects.givePotionEffect(player,"SATURATION", 255, -1);
+        });
+
+        command.createCommandRoot("resumeGame", player -> {
+            player.sendMessage("You have resumed the game.");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tick unfreeze");
+            PotionEffects.clearAllEffectsFromPlayer(player);
+            PotionEffects.restorePlayersCurrentEffects (player);
+        });
         
        
         return root;
