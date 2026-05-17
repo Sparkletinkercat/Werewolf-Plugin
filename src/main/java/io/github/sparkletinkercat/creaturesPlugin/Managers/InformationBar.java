@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class InformationBar {
     private BossBar bossBar;
+    private String title = "";
     private List<Player> players;
     
     public InformationBar (String name) {
@@ -19,6 +20,7 @@ public class InformationBar {
                 BarStyle.SEGMENTED_6
         );
 
+        this.title = name;
         bossBar.setProgress(0);
 
         this.players = new ArrayList<Player> ();
@@ -63,7 +65,8 @@ public class InformationBar {
 
     }
 
-
+    public void changeBossBarTitle (String name) {bossBar.setTitle(name);}
+    public String getTitle () {return this.title;}
 
 
 

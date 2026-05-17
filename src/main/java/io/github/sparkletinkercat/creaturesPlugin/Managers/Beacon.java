@@ -514,16 +514,24 @@ public class Beacon {
                 else if (conversionAmount == halfLimitPlusOne) {conversionAmount = halfLimitMinusOne;}
                 this.updateMetaData(team, "ControllingTeam", target.getX(),target.getY(),target.getZ());
                 this.updateMetaData("false", "UpdatedGameState", target.getX(),target.getY(),target.getZ());
+                infoBar.changeBossBarTitle("Controlling Team : " + team + " : " + infoBar.getTitle());
             }
         }
 
         // Make sure the conversion amount is not greater than or less than the limits
-        if (conversionAmount > limit) {conversionAmount = limit;}
-        else if (conversionAmount < 0) {conversionAmount = 0;}
+        if (conversionAmount > limit) {
+            conversionAmount = limit;
+            infoBar.changeBossBarTitle("Controlling Team : " + team);
+        }
+        else if (conversionAmount < 0) {
+            conversionAmount = 0;
+            infoBar.changeBossBarTitle("Controlling Team : " + team);
+        }
 
         this.updateMetaData(String.valueOf(conversionAmount), "ConversionAmount", target.getX(),target.getY(),target.getZ());
         double test = conversionAmount / (double)limit * 100;
         infoBar.setBossBarPercentage(test);
+        
     }
 }
 

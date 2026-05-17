@@ -67,7 +67,6 @@ public class BeaconListener implements Listener {
                 conversionTime = (int)Setting.getSettingValue("beaconConversionTimeInTicks");
             } catch (Exception e) {
                 conversionTime = 1000;
-                System.out.println("STUFF BAD");
             }
             beacon.consecrateBeacon(player, 5, conversionTime, item, infoBar);
 
