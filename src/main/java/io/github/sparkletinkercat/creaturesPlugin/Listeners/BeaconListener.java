@@ -62,7 +62,14 @@ public class BeaconListener implements Listener {
             infoBar.displayInformationBar(player);
 
             // Get beacons controlling team and increament infoBar
-            beacon.consecrateBeacon(player, 5, 1000, item, infoBar);
+            int conversionTime = 0;
+            try {
+                conversionTime = (int)Setting.getSettingValue("beaconConversionTimeInTicks");
+            } catch (Exception e) {
+                conversionTime = 1000;
+                System.out.println("STUFF BAD");
+            }
+            beacon.consecrateBeacon(player, 5, conversionTime, item, infoBar);
 
         }, 0L, 1L); // 1 tick
     }

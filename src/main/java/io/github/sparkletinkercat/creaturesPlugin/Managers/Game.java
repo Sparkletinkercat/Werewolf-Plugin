@@ -41,11 +41,8 @@ public class Game {
 
     public void setupAllBeacons () {
         Beacon beacon = new Beacon(plugin);
-        System.out.println("here1");
         List<Beacon.BeaconItem> beaconItems = beacon.retrieveAllBeaconsFromFile();
-        System.out.println("here2");
         if (beaconItems != null) {
-            System.out.println("here3");
             BeaconListener.importBeaconItems(beaconItems);
 
             // Register all beacon Info bars
@@ -131,6 +128,11 @@ public class Game {
                 PluginPlayer.removeAllAtributes(player,plugin);
             }
         }
+    }
+
+    public void setupAllSettings () {
+        FileManager fileManager = new FileManager(plugin, "settings");
+        Setting.convertToSettings (fileManager.retrieveAllSections ());
     }
 
     

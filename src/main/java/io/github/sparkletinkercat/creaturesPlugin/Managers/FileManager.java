@@ -4,7 +4,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class FileManager {
@@ -64,4 +66,21 @@ public class FileManager {
 
         for (String item : files) {plugin.saveResource(item, false); }
     }
+
+    public HashMap<String, Object> retrieveAllSections () {
+        File file = new File(plugin.getDataFolder(), fileName + ".yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        Set<String> keys = config.getKeys(true); // true = include nested
+        HashMap<String, Object> settingData = new HashMap<String, Object>();
+
+        for (String key : keys) {
+            System.out.println(key);
+            Object value = config.get(key); // <- change here
+            System.out.println(value);
+            settingData.put(key, value);
+        }
+        return settingData;
+    }
+
 }

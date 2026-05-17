@@ -30,6 +30,7 @@ public class CommandsGame {
             Game game = new Game (plugin);
             game.setupAllBeacons ();
             game.setupAllTeams();
+            game.setupAllSettings();
             
 
         });
