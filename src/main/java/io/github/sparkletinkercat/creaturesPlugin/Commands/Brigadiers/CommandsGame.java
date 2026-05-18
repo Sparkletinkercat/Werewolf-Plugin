@@ -60,9 +60,8 @@ public class CommandsGame {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tick freeze");
             PotionEffects.storePlayersCurrentEffects (player);
             PotionEffects.clearAllEffectsFromPlayer(player);
-            PotionEffects.givePotionEffectToAll("SPEED", 0);
-            //PotionEffects.givePotionEffect(player,"WEAKNESS", 255, -1);
-            //PotionEffects.givePotionEffect(player,"SATURATION", 255, -1);
+            PotionEffects.givePotionEffectToAll("WEAKNESS", 255, -1);
+            PotionEffects.givePotionEffectToAll("SATURATION", 255, -1);
         });
 
         command.createCommandRoot("resumeGame", player -> {

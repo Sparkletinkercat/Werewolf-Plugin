@@ -51,6 +51,11 @@ public class FileManager {
         updateFile (path, null);
     }
 
+    public void removeSectionOfFile(String section) {
+        String path = section;
+        updateFile (path, null);
+    }
+
     public YamlConfiguration returnConfig () {return config;}
 
     public static void setupGameFiles (JavaPlugin plugin) {
@@ -61,7 +66,8 @@ public class FileManager {
         List<String> files = List.of(
             "beacons.yml",
             "teamSettings.yml",
-            "settings.yml"
+            "settings.yml",
+            "trackPotionEffects.yml"
         );
 
         for (String item : files) {plugin.saveResource(item, false); }
@@ -83,4 +89,5 @@ public class FileManager {
         return settingData;
     }
 
+    public File getFile () {return this.file;}
 }

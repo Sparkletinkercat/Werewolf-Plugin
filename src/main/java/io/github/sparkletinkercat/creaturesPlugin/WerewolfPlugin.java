@@ -14,38 +14,41 @@ import org.bukkit.event.server.ServerLoadEvent;
 
 
 public class WerewolfPlugin extends JavaPlugin implements Listener {
-  
-  @Override
-  public void onLoad() {}
-  
-  
-  /**
-     * Enables and registers all listeners and commands,
-     * Creates the plugin folder and all resource paths.
-     *
-     */
-  @Override
-  public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
+      private static WerewolfPlugin instance;
 
-      
-        Game.registerAllListeners(this);
-        new CommandBrigadier(this).registerAll();
-        
-        FileManager.setupGameFiles(this);
+      @Override
+      public void onLoad() {}
 
-        
-  }
-
-  @EventHandler
-  public void onServerLoad(ServerLoadEvent event) {
-        Game game = new Game (this);
-        game.setupAllBeacons ();
-        game.getTeams();
-        game.checkBeaconGameState();;
-  }
-
-  @Override
-  public void onDisable() {}
+      public static WerewolfPlugin getInstance() {return instance;}
   
+      /**
+       * Enables and registers all listeners and commands,
+       * Creates the plugin folder and all resource paths.
+       *
+       */
+      @Override
+      public void onEnable() {
+            instance = this;
+            Bukkit.getPluginManager().registerEvents(this, this);
+
+
+            Game.registerAllListeners(this);
+            new CommandBrigadier(this).registerAll();
+            
+            FileManager.setupGameFiles(this);
+
+            
+      }
+
+      @EventHandler
+      public void onServerLoad(ServerLoadEvent event) {
+            Game game = new Game (this);
+            game.setupAllBeacons ();
+            game.getTeams();
+            game.checkBeaconGameState();;
+      }
+
+      @Override
+      public void onDisable() {}
+
 }
