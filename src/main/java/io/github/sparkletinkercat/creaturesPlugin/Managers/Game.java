@@ -114,7 +114,7 @@ public class Game {
                     Bukkit.broadcast(
                         Component.text((double) entry.getValue() * bonusPerLevel, NamedTextColor.RED)
                     );
-                    PluginPlayer.setAttribute(attributeBonus, player, plugin, (double) entry.getValue() * bonusPerLevel);
+                    PluginPlayer.setAttribute(attributeBonus, player, (double) entry.getValue() * bonusPerLevel, "bonus_beacon");
                 }
 
                 if (entry.getValue() == beaconNumber && controlsAllBeacons != true) {

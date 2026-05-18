@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin;
+
 public class Setting {
     private static List<Setting> settings = new ArrayList<Setting> ();
 
@@ -37,5 +39,23 @@ public class Setting {
             }
         }
         return null;
+    }
+
+    public static Setting getSettingByName (String settingName) {
+        for (Setting setting : settings) {
+            System.out.print(setting.getName());
+            if (setting.getName().equals(settingName)) {
+                return setting;
+            }
+        }
+        return null;
+    }
+
+    public void updateSetting (Object object) {
+        WerewolfPlugin plugin = WerewolfPlugin.getInstance();
+        FileManager file = new FileManager(plugin, "settings");
+
+        file.updateFile(path, object);
+        this.value = object;
     }
 }

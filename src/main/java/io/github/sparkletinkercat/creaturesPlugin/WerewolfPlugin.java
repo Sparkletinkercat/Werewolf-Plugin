@@ -44,6 +44,7 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
       public void onServerLoad(ServerLoadEvent event) {
             Game game = new Game (this);
             game.setupAllBeacons ();
+            game.setupAllSettings();
             game.getTeams();
             game.checkBeaconGameState();;
       }

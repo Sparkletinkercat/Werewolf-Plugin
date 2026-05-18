@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -84,7 +85,16 @@ public class PluginPlayer {
         return null;
     }
 
-    public static void setAttribute (String attributeName, Player player, JavaPlugin plugin, double attributeBonus) {
+    public static void setAllPlayersAttributesByName (String attributeName, double attributeBonus, String keyName) {
+        List<Player> players = getAllOnlinePlayers();
+        for (Player player : players) {
+            setAttribute(attributeName, player, attributeBonus, keyName);
+        }
+    }
+
+    public static void setAttribute (String attributeName, Player player, double attributeBonus, String keyName) {
+        WerewolfPlugin plugin = WerewolfPlugin.getInstance();
+        
         Attribute attribute = Registry.ATTRIBUTE.get(
             NamespacedKey.fromString(attributeName.toLowerCase())
         );
@@ -93,7 +103,7 @@ public class PluginPlayer {
         AttributeInstance instance = player.getAttribute(attribute);
 
         if (instance != null) {
-            NamespacedKey key = new NamespacedKey(plugin, "bonus_beacon");
+            NamespacedKey key = new NamespacedKey(plugin, keyName);
             instance.removeModifier(key);
 
             AttributeModifier bonus = new AttributeModifier(
@@ -103,6 +113,29 @@ public class PluginPlayer {
             );
 
             instance.addModifier(bonus);
+        }
+    }
+
+    public static void removeAllPlayersAttributesByName (String attributeName, String keyName) {
+        List<Player> players = getAllOnlinePlayers();
+        for (Player player : players) {
+            removeAttribute(attributeName, player,  keyName);
+        }
+    }
+
+    public static void removeAttribute (String attributeName, Player player, String keyName) {
+        WerewolfPlugin plugin = WerewolfPlugin.getInstance();
+        
+        Attribute attribute = Registry.ATTRIBUTE.get(
+            NamespacedKey.fromString(attributeName.toLowerCase())
+        );
+
+        // 2. Get instance from player
+        AttributeInstance instance = player.getAttribute(attribute);
+
+        if (instance != null) {
+            NamespacedKey key = new NamespacedKey(plugin, keyName);
+            instance.removeModifier(key);
         }
     }
 

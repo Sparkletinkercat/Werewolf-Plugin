@@ -60,8 +60,11 @@ public class CommandsGame {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tick freeze");
             PotionEffects.storePlayersCurrentEffects (player);
             PotionEffects.clearAllEffectsFromPlayer(player);
-            PotionEffects.givePotionEffectToAll("WEAKNESS", 255, -1);
             PotionEffects.givePotionEffectToAll("SATURATION", 255, -1);
+            PluginPlayer.setAllPlayersAttributesByName("BLOCK_INTERACTION_RANGE", -100, "pausedPlayerBlockInteractionDisabled");
+            PluginPlayer.setAllPlayersAttributesByName("ENTITY_INTERACTION_RANGE", -100, "pausedPlayerEntityInteractionDisabled");
+            Setting setting = Setting.getSettingByName("gameState");
+            setting.updateSetting("paused");
         });
 
         command.createCommandRoot("resumeGame", player -> {
@@ -69,6 +72,10 @@ public class CommandsGame {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tick unfreeze");
             PotionEffects.clearAllEffectsFromPlayer(player);
             PotionEffects.restorePlayersCurrentEffects (player);
+            PluginPlayer.removeAllPlayersAttributesByName("BLOCK_INTERACTION_RANGE", "pausedPlayerBlockInteractionDisabled");
+            PluginPlayer.removeAllPlayersAttributesByName("ENTITY_INTERACTION_RANGE",  "pausedPlayerEntityInteractionDisabled");
+            Setting setting = Setting.getSettingByName("gameState");
+            setting.updateSetting("active");
         });
         
        

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.Location;
 
@@ -60,7 +61,14 @@ public class PlayerListener implements Listener {
             
         }
         } else {
-        event.getPlayer().sendMessage("You are not in build mode");
+            event.getPlayer().sendMessage("You are not in build mode");
         }
+    }
+
+    @EventHandler
+    public void onChestOpen(PlayerInteractEvent event) {
+
+        if (event.getClickedBlock() == null) return;
+        else {event.setCancelled(true);}
     }
 }
