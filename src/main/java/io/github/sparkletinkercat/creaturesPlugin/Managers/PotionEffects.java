@@ -113,9 +113,17 @@ public class PotionEffects {
 
         for (Player player : players) {
             YamlConfiguration config = file.returnConfig();
-            List<PotionEffect> effects = config.getList(player.getUniqueId().toString()).stream()
-                .map(obj -> (PotionEffect) obj)
-                .toList();
+            List<PotionEffect> effects;
+
+            List<?> rawList = config.getList(player.getUniqueId().toString());
+
+            if (rawList == null) {
+                effects = new ArrayList<>();
+            } else {
+                effects = rawList.stream()
+                        .map(obj -> (PotionEffect) obj)
+                        .toList();
+            }
 
             storedPotionEffects.put(player.getUniqueId(), effects);
         }
