@@ -65,6 +65,8 @@ public class CommandsGame {
             PluginPlayer.setAllPlayersAttributesByName("ENTITY_INTERACTION_RANGE", -100, "pausedPlayerEntityInteractionDisabled");
             Setting setting = Setting.getSettingByName("gameState");
             setting.updateSetting("paused");
+            Game game = new Game();
+            game.pausedGame();
         });
 
         command.createCommandRoot("resumeGame", player -> {

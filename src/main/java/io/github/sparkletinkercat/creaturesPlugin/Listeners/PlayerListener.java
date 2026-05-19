@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.entity.Player;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
@@ -66,9 +67,18 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onChestOpen(PlayerInteractEvent event) {
+    public void onPlayerDamage(EntityDamageEvent event) {
+        String gameState = (String) Setting.getSettingValue("gameState");
 
-        if (event.getClickedBlock() == null) return;
-        else {event.setCancelled(true);}
+        if (!(event.getEntity() instanceof Player player)) return;
+        else if (gameState.equals("paused")) {event.setCancelled(true);}
     }
+
+    // @EventHandler
+    // public void onChestOpen(PlayerInteractEvent event) {
+    //     String gameData = (String) Setting.getSettingValue("gameData");
+
+    //     if (event.getClickedBlock() == null) return;
+    //     else if (gameData.equals("paused")) {event.setCancelled(true);}
+    // }
 }

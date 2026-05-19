@@ -1,11 +1,15 @@
 package io.github.sparkletinkercat.creaturesPlugin.Listeners;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -39,8 +43,34 @@ public class BeaconListener implements Listener {
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
+        String gameState = String.valueOf(Setting.getSettingValue("gameState"));
+        Beacon beacon = new Beacon(plugin);
+        ItemStack item = beacon.checkIfBeaconNearby(player, 5);
+        
+        if (gameState.equals("paused") && event.isSneaking() && item != null) {
+            
+            ActionBar actionBar = new ActionBar("You cannot convert beacons whilst the game is paused", NamedTextColor.RED, 2, 80);
+            ActionBar actionBarPrio = ActionBar.getPriorityActionBar();
+                
+            
+                
 
-        if (event.isSneaking()) {startSneakTask(player);}
+            
+
+            player.sendActionBar(
+                Component.text(actionBarPrio.getText())
+                .color(actionBarPrio.getColor())
+            );
+
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                actionBar.removeActionBar();
+            }, 80L);
+            
+
+            
+            
+        } 
+        else if (event.isSneaking()) {startSneakTask(player);}
 
     }
 

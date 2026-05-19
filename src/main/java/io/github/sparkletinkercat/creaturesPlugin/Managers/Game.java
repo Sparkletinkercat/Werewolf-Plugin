@@ -1,6 +1,8 @@
 package io.github.sparkletinkercat.creaturesPlugin.Managers;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
+import io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.BeaconListener;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.MenuListener;
 import io.github.sparkletinkercat.creaturesPlugin.Listeners.PlayerListener;
@@ -14,15 +16,21 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.maven.artifact.repository.metadata.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class Game {
     private JavaPlugin plugin;
+    final BukkitTask[] taskHolder = new BukkitTask[1];
     
     public Game (JavaPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public Game () {
+        this.plugin = WerewolfPlugin.getInstance();
     }
 
     public static void registerAllListeners (JavaPlugin plugin) {
@@ -38,6 +46,32 @@ public class Game {
         }
     }
 
+    public void pausedGame () {
+        String gameState = (String) Setting.getSettingValue("gameState");
+        if (gameState.equals("paused")) {
+
+            ActionBar actionBar = new ActionBar("PAUSED", NamedTextColor.RED, 1, -1);
+            taskHolder[0] = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+                ActionBar actionBarPrio = ActionBar.getPriorityActionBar();
+                
+                String gameStateUpdated = (String) Setting.getSettingValue("gameState");
+                if (!gameStateUpdated.equals("paused")) {
+                    actionBar.removeActionBar();
+                    taskHolder[0].cancel();
+                }
+                
+                List<Player> players = PluginPlayer.getAllOnlinePlayers();
+                for (Player player : players) {
+                    player.sendActionBar(
+                        Component.text(actionBarPrio.getText())
+                        .color(actionBarPrio.getColor())
+                    );
+                }
+                
+
+                }, 0L, 40L);
+            };
+    }
 
     public void setupAllBeacons () {
         Beacon beacon = new Beacon(plugin);
