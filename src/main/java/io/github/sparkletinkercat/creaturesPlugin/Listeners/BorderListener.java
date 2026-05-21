@@ -5,6 +5,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.entity.Player;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
+import io.github.sparkletinkercat.creaturesPlugin.Implementations.*;
+import io.github.sparkletinkercat.creaturesPlugin.DeathManagers.*;
 import org.bukkit.Location;
 
 public class BorderListener implements Listener {

@@ -12,8 +12,10 @@ public class DeathListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        AspectHandler<DeathWeakness>  test = new DeathWeakness();
+        DeathWeakness test = new DeathWeakness();
+        test.retrieveAspectFromFile(event.getPlayer());
+        test.incrementDeathCount();
+        event.getPlayer().sendMessage("Death Count : " + test.getDeathCount());
         test.storeAspectInFile(event.getPlayer());
-        event.getPlayer().sendMessage("Death Occured");
     }
 }

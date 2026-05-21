@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import java.util.UUID;
+import org.bukkit.GameMode;
 import java.util.concurrent.ConcurrentHashMap;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
+import org.bukkit.Bukkit;
 
-public class DeathHandler<T extends DeathHandler<T>> extends AspectHandler<T>  {
+public class DeathHandler<T extends DeathHandler<T>> extends AspectHandler<T> {
     
-    public boolean checkIfTrueDeath (Player player) {
-        PluginPlayer playerData = new PluginPlayer (player);
-        
-
-        return false;
+    public void runTrueDeath () {
+        Player player = Bukkit.getPlayer(this.getPlayerID());
+        player.setGameMode(GameMode.SPECTATOR);
     }
 
     @Override

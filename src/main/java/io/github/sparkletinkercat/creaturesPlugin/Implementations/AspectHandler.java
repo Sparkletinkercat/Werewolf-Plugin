@@ -21,11 +21,16 @@ import java.lang.reflect.Field;
 
 public class AspectHandler<T> {
     public String sectionName = "Aspect";
+    public String fileName = "players";
+    protected UUID playerID;
+
+    public AspectHandler() {}
     
     public void storeAspectInFile (Player player) {
+        this.playerID = player.getUniqueId();
         WerewolfPlugin plugin = WerewolfPlugin.getInstance();
 
-        FileManager file = new FileManager(plugin, "players");
+        FileManager file = new FileManager(plugin, this.getFileName());
         YamlConfiguration config = file.returnConfig();
 
         UUID playerID = player.getUniqueId();
@@ -35,6 +40,44 @@ public class AspectHandler<T> {
         catch (Exception e) {
             player.sendMessage("Failed");
         }
+    }
+
+    public void retrieveAspectFromFile (Player player) {
+        this.playerID = player.getUniqueId();
+        WerewolfPlugin plugin = WerewolfPlugin.getInstance();
+        UUID playerID = player.getUniqueId();
+        String sectionName = this.getSectionName();
+
+        FileManager file = new FileManager(plugin, "players");
+        YamlConfiguration config = file.returnConfig();
+
+        Class<?> clazz = this.getClass();
+        try {
+            //Object instance = clazz.getDeclaredConstructor().newInstance();
+        
+
+            while (clazz != null) {
+                for (Field field : clazz.getDeclaredFields()) {
+                    field.setAccessible(true);
+
+                    try {
+                        String name = field.getName();
+                        if (!name.equals("sectionName")) {
+                            Object value = config.get(playerID + "." + sectionName + "." + name);
+                            if (value != null) {
+                                field.set(this, value); 
+                            }
+                        }
+                        
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                clazz = clazz.getSuperclass();
+            }
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     private Map<String, Object> toMap() {
@@ -49,7 +92,9 @@ public class AspectHandler<T> {
                 try {
                     Object value = field.get(this);
                     String name = field.getName();
-                    if (!name.equals("sectionName")) {map.put(name, value);}
+                    if (!name.equals("sectionName") && !name.equals("fileName") && !name.equals("playerID")) {
+                        map.put(name, value);
+                    }
                     
 
                 } catch (IllegalAccessException e) {
@@ -64,5 +109,6 @@ public class AspectHandler<T> {
     }
 
     protected String getSectionName () {return this.sectionName;} 
-
+    protected String getFileName () {return this.fileName;} 
+    protected UUID getPlayerID () {return this.playerID;}
 }

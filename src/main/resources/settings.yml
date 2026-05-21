@@ -5,3 +5,4 @@ settings:
   borderCenterX: -158
   borderCenterZ: -49
   borderRadius: 50
+  deathWeaknessMaximumCount: 5
