@@ -19,31 +19,24 @@ import org.bukkit.configuration.ConfigurationSection;
 import io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin;
 import java.lang.reflect.Field;
 
-public class AspectHandler<T extends AspectHandler<T>> extends TypeHandler<T> {
-    protected UUID playerID;
+public class TypeHandler<T> {
+    public String sectionName = "Type";
+    public String fileName = "players";
 
-    public AspectHandler() {}
-    
-    public void storeAspectInFile (Player player) {
-        this.playerID = player.getUniqueId();
+    public void storeAspectInFile () {
         WerewolfPlugin plugin = WerewolfPlugin.getInstance();
 
         FileManager file = new FileManager(plugin, this.getFileName());
         YamlConfiguration config = file.returnConfig();
 
-        UUID playerID = player.getUniqueId();
-        config.set(playerID.toString() + "." + this.getSectionName(), toMap());
+        config.set(this.getSectionName(), toMap());
 
         try {config.save(file.getFile());} 
-        catch (Exception e) {
-            player.sendMessage("Failed");
-        }
+        catch (Exception e) {}
     }
 
-    public void retrieveAspectFromFile (Player player) {
-        this.playerID = player.getUniqueId();
+    public void retrieveAspectFromFile () {
         WerewolfPlugin plugin = WerewolfPlugin.getInstance();
-        UUID playerID = player.getUniqueId();
         String sectionName = this.getSectionName();
 
         FileManager file = new FileManager(plugin, "players");
@@ -61,7 +54,7 @@ public class AspectHandler<T extends AspectHandler<T>> extends TypeHandler<T> {
                     try {
                         String name = field.getName();
                         if (!name.equals("sectionName")) {
-                            Object value = config.get(playerID + "." + sectionName + "." + name);
+                            Object value = config.get(this.getSectionName() + "." + name);
                             if (value != null) {
                                 field.set(this, value); 
                             }
@@ -77,7 +70,49 @@ public class AspectHandler<T extends AspectHandler<T>> extends TypeHandler<T> {
             }
         } catch (Exception e) {e.printStackTrace();}
     }
-    
+
+    public List<TypeHandler<?>> retrieveAllAspectsFromFile () {
+        WerewolfPlugin plugin = WerewolfPlugin.getInstance();
+
+        FileManager file = new FileManager(plugin, "players");
+        YamlConfiguration config = file.returnConfig();
+        ConfigurationSection section = config.getConfigurationSection("");
+        List<String> names = new ArrayList<>(section.getKeys(false));
+
+        List<TypeHandler<?>> classes = new ArrayList<> ();
+
+        for (String sectionName : names) {
+            Class<?> clazz = this.getClass();
+            try {
+                Object instance = clazz.getDeclaredConstructor().newInstance();
+            
+
+                while (clazz != null) {
+                    for (Field field : clazz.getDeclaredFields()) {
+                        field.setAccessible(true);
+
+                        try {
+                            String name = field.getName();
+                            if (!name.equals("sectionName")) {
+                                Object value = config.get(sectionName + "." + name);
+                                if (value != null) {
+                                    field.set(instance, value); 
+                                }
+                            }
+                            
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    clazz = clazz.getSuperclass();
+                }
+                classes.add((TypeHandler<?>) instance);
+            } catch (Exception e) {e.printStackTrace();}
+        }
+        return classes;
+    }
 
     private Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -91,7 +126,7 @@ public class AspectHandler<T extends AspectHandler<T>> extends TypeHandler<T> {
                 try {
                     Object value = field.get(this);
                     String name = field.getName();
-                    if (!name.equals("sectionName") && !name.equals("fileName") && !name.equals("playerID")) {
+                    if (!name.equals("sectionName") && !name.equals("fileName") && !name.equals("teamSettings")) {
                         map.put(name, value);
                     }
                     
@@ -107,10 +142,6 @@ public class AspectHandler<T extends AspectHandler<T>> extends TypeHandler<T> {
         return map;
     }
 
-    @Override
-    protected String getSectionName () {return "Aspect";} 
-    protected UUID getPlayerID () {return this.playerID;}
-    @Override
-    protected String getFileName () {return "players";}
-
+    protected String getSectionName () {return this.sectionName;} 
+    protected String getFileName () {return this.fileName;} 
 }

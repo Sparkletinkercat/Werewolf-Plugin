@@ -61,7 +61,7 @@ public class CommandsGame {
             PotionEffects.storePlayersCurrentEffects (player);
             PotionEffects.clearAllEffectsFromPlayer(player);
             PotionEffects.givePotionEffectToAll("SATURATION", 255, -1);
-            PotionEffects.givePotionEffectToAll("JUMP_BOOST", 255, -1);
+            PotionEffects.givePotionEffectToAll("JUMP_BOOST", 0, -1);
             PluginPlayer.setAllPlayersAttributesByName("BLOCK_INTERACTION_RANGE", -100, "pausedPlayerBlockInteractionDisabled");
             PluginPlayer.setAllPlayersAttributesByName("ENTITY_INTERACTION_RANGE", -100, "pausedPlayerEntityInteractionDisabled");
             Setting setting = Setting.getSettingByName("gameState");

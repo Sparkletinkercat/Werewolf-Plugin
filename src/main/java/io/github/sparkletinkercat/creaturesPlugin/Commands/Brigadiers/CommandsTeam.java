@@ -26,6 +26,8 @@ public class CommandsTeam {
         
         command.createCommandRoot("createNewTeam", (player, name) -> {
             player.sendMessage("You created a new team.");
+            // TeamManagerRewrite team = new TeamManagerRewrite (name, true);
+            // team.storeAspectInFile();
             TeamManager team = new TeamManager(plugin);
             team.createNewTeam(name, true);
         });
