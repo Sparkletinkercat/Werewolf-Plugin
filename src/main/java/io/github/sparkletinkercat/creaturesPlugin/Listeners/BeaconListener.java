@@ -48,26 +48,14 @@ public class BeaconListener implements Listener {
         ItemStack item = beacon.checkIfBeaconNearby(player, 5);
         
         if (gameState.equals("paused") && event.isSneaking() && item != null) {
-            
-            ActionBar actionBar = new ActionBar("You cannot convert beacons whilst the game is paused", NamedTextColor.RED, 2, 80);
-            ActionBar actionBarPrio = ActionBar.getPriorityActionBar();
-                
-            
-                
-
-            
-
-            player.sendActionBar(
-                Component.text(actionBarPrio.getText())
-                .color(actionBarPrio.getColor())
-            );
+            List<Player> playerActionBar = new ArrayList<Player>();
+            playerActionBar.add(player);
+            ActionBar actionBar = new ActionBar("You cannot convert beacons whilst the game is paused", NamedTextColor.RED, 2, 80, playerActionBar);
+            ActionBar.displayPriorityActionBar();
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 actionBar.removeActionBar();
             }, 80L);
-            
-
-            
             
         } 
         else if (event.isSneaking()) {startSneakTask(player);}

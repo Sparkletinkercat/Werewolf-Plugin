@@ -52,22 +52,13 @@ public class Game {
 
             ActionBar actionBar = new ActionBar("PAUSED", NamedTextColor.RED, 1, -1);
             taskHolder[0] = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-                ActionBar actionBarPrio = ActionBar.getPriorityActionBar();
+                ActionBar.displayPriorityActionBar();
                 
                 String gameStateUpdated = (String) Setting.getSettingValue("gameState");
                 if (!gameStateUpdated.equals("paused")) {
                     actionBar.removeActionBar();
                     taskHolder[0].cancel();
                 }
-                
-                List<Player> players = PluginPlayer.getAllOnlinePlayers();
-                for (Player player : players) {
-                    player.sendActionBar(
-                        Component.text(actionBarPrio.getText())
-                        .color(actionBarPrio.getColor())
-                    );
-                }
-                
 
                 }, 0L, 40L);
             };
