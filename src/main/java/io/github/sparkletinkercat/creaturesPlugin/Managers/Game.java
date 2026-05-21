@@ -20,6 +20,7 @@ import org.apache.maven.artifact.repository.metadata.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import net.kyori.adventure.title.Title;
 
 public class Game {
     private JavaPlugin plugin;
@@ -144,15 +145,52 @@ public class Game {
 
                 if (entry.getValue() == beaconNumber && controlsAllBeacons != true) {
                     controlsAllBeacons = true;
+                    Setting setting = Setting.getSettingByName("allBeaconsControlledBy");
+                    setting.updateSetting(entry.getKey());
                     Bukkit.broadcast(
                         Component.text("All beacons are controlled by :" + entry.getKey(), NamedTextColor.RED)
                     );
+
+                    if (checkForTeamWin(team) == true) {
+                        player.showTitle(Title.title(
+                            Component.text("The barrier has been broken"),
+                            Component.text("You are free to leave.")
+                        ));
+                    }
                 }
             }
             if (controlsABeacon == false) {
                 PluginPlayer.removeAllAtributes(player,plugin);
             }
         }
+    }
+
+    public String checkForTeamWin () {
+        int count = 0;
+        String winningTeam = null;
+        for (Player player : PluginPlayer.getAllOnlinePlayers()) {
+            PluginPlayer playerInfo = new PluginPlayer(player);
+            String team = (String) playerInfo.getPlayerInformation("Team");
+            if (count == 0) {winningTeam = team;}
+            else if (!team.equals(winningTeam)) {
+                winningTeam = null;
+                return winningTeam;
+            }
+        }
+        return winningTeam;
+    }
+
+    public Boolean checkForTeamWin (String winningTeam) {
+        winningTeam = "team" + winningTeam;
+        for (Player player : PluginPlayer.getAllOnlinePlayers()) {
+            PluginPlayer playerInfo = new PluginPlayer(player);
+            String team = (String) playerInfo.getPlayerInformation("Team");
+            System.out.println("Current team : " + winningTeam + "Players team : " + team);
+            if (!team.equals(winningTeam)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setupAllSettings () {

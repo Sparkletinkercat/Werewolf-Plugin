@@ -1,1 +1,19 @@
 teams:
+  Vampire:
+    enabled: true
+    startingNumber: 0
+    beaconType: desecrated
+    allBeaconsControlledBonus: MAX_HEALTH
+    beaconControlBonusPerLevel: 1
+  Human:
+    enabled: true
+    startingNumber: 0
+    beaconType: holy
+    allBeaconsControlledBonus: MAX_HEALTH
+    beaconControlBonusPerLevel: 1
+  Werewolf:
+    enabled: true
+    startingNumber: 1
+    beaconType: damaged
+    allBeaconsControlledBonus: MAX_HEALTH
+    beaconControlBonusPerLevel: 1

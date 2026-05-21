@@ -1,3 +1,7 @@
 settings:
   beaconConversionTimeInTicks: 1000
   gameState: paused
+  allBeaconsControlledBy: none
+  borderCenterX: -158
+  borderCenterZ: -49
+  borderRadius: 50
