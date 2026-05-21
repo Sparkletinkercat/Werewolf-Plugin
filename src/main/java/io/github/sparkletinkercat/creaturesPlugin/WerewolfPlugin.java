@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.sparkletinkercat.creaturesPlugin.Commands.Brigadiers.*;
-import io.github.sparkletinkercat.creaturesPlugin.Managers.FileManager;
+import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.Game;
 
 import org.bukkit.event.server.ServerLoadEvent;
@@ -46,7 +46,8 @@ public class WerewolfPlugin extends JavaPlugin implements Listener {
             game.setupAllBeacons ();
             game.setupAllSettings();
             game.getTeams();
-            game.checkBeaconGameState();;
+            game.checkBeaconGameState();
+            BorderManager.getBorderSettings();
       }
 
       @Override

@@ -5,15 +5,18 @@ teams:
     beaconType: desecrated
     allBeaconsControlledBonus: MAX_HEALTH
     beaconControlBonusPerLevel: 1
+    deathEffect: weakness
   Human:
     enabled: true
     startingNumber: 0
     beaconType: holy
     allBeaconsControlledBonus: MAX_HEALTH
     beaconControlBonusPerLevel: 1
+    deathEffect: weakness
   Werewolf:
     enabled: true
     startingNumber: 1
     beaconType: damaged
     allBeaconsControlledBonus: MAX_HEALTH
     beaconControlBonusPerLevel: 1
+    deathEffect: weakness

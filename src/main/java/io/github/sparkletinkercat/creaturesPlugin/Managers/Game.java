@@ -3,9 +3,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import io.github.sparkletinkercat.creaturesPlugin.WerewolfPlugin;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.BeaconListener;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.MenuListener;
-import io.github.sparkletinkercat.creaturesPlugin.Listeners.PlayerListener;
+import io.github.sparkletinkercat.creaturesPlugin.Listeners.*;
 import io.github.sparkletinkercat.creaturesPlugin.Managers.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -39,7 +37,9 @@ public class Game {
         List<Listener> listeners = List.of(
             new BeaconListener(plugin),
             new PlayerListener(plugin),
-            new MenuListener(plugin)
+            new MenuListener(plugin),
+            new BorderListener(),
+            new DeathListener()
         );
 
         for (Listener item : listeners) {

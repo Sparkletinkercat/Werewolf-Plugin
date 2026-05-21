@@ -67,7 +67,8 @@ public class FileManager {
             "beacons.yml",
             "teamSettings.yml",
             "settings.yml",
-            "trackPotionEffects.yml"
+            "trackPotionEffects.yml",
+            "players.yml"
         );
 
         for (String item : files) {plugin.saveResource(item, false); }
